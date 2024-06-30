@@ -1,6 +1,9 @@
 package definitions;
 
 import io.appium.java_client.AppiumDriver;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,34 +18,41 @@ public class AndroidPartOne {
     private TaskOnePage taskOnePage;
     private DriverSetup driverSetup;
 
+    @Before
+    public void setUp() {
+        driverSetup = new DriverSetup();
+        driverSetup.setUp("Android");
+    }
+
+    @After
+    public void tearDown(){
+        driverSetup.tearDown();
+    }
+
     @Given("I open the Test App")
     public void i_open_the_test_app() {
-        // Implement logic to open the app
-        homePage = new HomePage(driver);  // Assuming 'driver' is initialized somewhere
-        taskOnePage = new TaskOnePage(driver);  // Assuming 'driver' is initialized somewhere
+        homePage.clickPartButton(1);
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
-
     @When("I tap on {string} button to open Part {int} screen")
-    public void i_tap_on_button_to_open_part_screen(String buttonName, Integer partNumber) {
-        // Implement logic to tap on the button
-        homePage.clickPartButton(partNumber);
+    public void i_tap_on_button_to_open_part_screen(String string, Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
-
-    @And("I input valid user credentials in the form")
+    @When("I input valid user credentials in the form")
     public void i_input_valid_user_credentials_in_the_form() {
-        // Implement logic to input credentials
-        // Example: taskOnePage.enterCredentials(username, password);
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
-
-    @And("I tap on SUBMIT button")
+    @When("I tap on SUBMIT button")
     public void i_tap_on_submit_button() {
-        // Implement logic to tap on submit button
-        // Example: taskOnePage.clickSubmit();
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
-
     @Then("I see a pop-up window with a message {string}")
-    public void i_see_a_pop_up_window_with_a_message(String message) {
-        // Implement logic to verify the pop-up message
-        // Example: Assert.assertEquals(taskOnePage.getPopupMessage(), message);
+    public void i_see_a_pop_up_window_with_a_message(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
 }
