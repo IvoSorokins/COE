@@ -16,28 +16,27 @@ import java.util.Date;
 public class ScreenshotUtil {
 
     /**
-     * Captures a screenshot and saves it to the appropriate directory based on test status
+     * Captures a screenshot and saves it to the appropriate directory only if the test fails
      *
      * @param result The TestNG test result
+     * @param status The status of the test ("pass" or "fail")
      */
     public void captureScreenshot(ITestResult result, String status) {
-        String destDir = "";
+        if (!status.equalsIgnoreCase("fail")) {
+            return; // Only capture screenshot on failure
+        }
+
+        String destDir = "screenshots/Failures"; // Directory for failure screenshots
         String passFailMethod = result.getMethod().getRealClass().getSimpleName() + "." + result.getMethod().getMethodName();
 
         File scrFile = DriverSetup.driver.getScreenshotAs(OutputType.FILE);
         DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy__hh_mm_ssaa");
-
-        if (status.equalsIgnoreCase("fail")) {
-            destDir = "screenshots/Failures";
-        }
-
-        new File(destDir).mkdirs();
         String destFile = passFailMethod + " - " + dateFormat.format(new Date()) + ".png";
 
         try {
             FileUtils.copyFile(scrFile, new File(destDir + "/" + destFile));
         } catch (IOException e) {
-            throw new RuntimeException("Failed to capture screenshot");
+            throw new RuntimeException(e);
         }
     }
 }

@@ -8,14 +8,15 @@ import org.testng.ITestResult;
  */
 public class TestListener extends ScreenshotUtil implements ITestListener {
 
-//    /**
-//     * Captures a screenshot when a test method succeeds
-//     *
-//     * @param tr The TestNG test result
-//     */
-//    public void onTestSuccess(ITestResult tr) {
-//        captureScreenshot(tr, "pass");
-//    }
+    /**
+     * Captures a screenshot when a test method succeeds
+     *
+     * @param tr The TestNG test result
+     */
+    @Override
+    public void onTestSuccess(ITestResult tr) {
+        captureScreenshot(tr, "pass");
+    }
 
     /**
      * Captures a screenshot when a test method fails
@@ -26,4 +27,6 @@ public class TestListener extends ScreenshotUtil implements ITestListener {
     public void onTestFailure(ITestResult tr) {
         captureScreenshot(tr, "fail");
     }
+
+    // Optionally, you can override other ITestListener methods as needed
 }
