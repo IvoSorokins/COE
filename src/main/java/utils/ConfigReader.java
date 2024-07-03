@@ -11,7 +11,6 @@ public class ConfigReader {
             "src" + File.separator +
                     "main" + File.separator +
                     "resources" + File.separator +
-                    "configs" + File.separator +
                     "config.properties";
 
     /**
