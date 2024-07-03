@@ -2,14 +2,17 @@ package pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 
 public class HomePage {
-    private AppiumDriver driver;
-    private static final String partPrefix = "com.example.appfortestautomation:id/scenario";
+    private final AppiumDriver driver;
+
+    // Elements
+    private static final String partPrefix = "scenario";
 
     public HomePage(AppiumDriver driver) {
         this.driver = driver;
