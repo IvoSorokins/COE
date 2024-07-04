@@ -3,6 +3,7 @@ package definitions.android;
 import io.appium.java_client.AppiumDriver;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -32,28 +33,36 @@ public class AndroidPartOne {
 
     @Given("I open the Test App")
     public void i_open_the_test_app() {
-        homePage.clickPartButton(1);
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        homePage.headerDisplayed();
     }
     @When("I tap on {string} button to open Part {int} screen")
     public void i_tap_on_button_to_open_part_screen(String string, Integer int1) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        homePage.clickPartButton(int1);
+        taskOnePage.headerDisplayed();
     }
-    @When("I input valid user credentials in the form")
+
+    @And("I input valid user credentials in the form")
     public void i_input_valid_user_credentials_in_the_form() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        taskOnePage.enterCredentials("Ivos","ivo.sorokins@gmail.com","ivo17IVO!");
     }
-    @When("I tap on SUBMIT button")
+    @And("I input invalid username in the form")
+    public void i_input_invalid_user_credentials_in_the_form(){
+        taskOnePage.enterCredentials("Ivo","gmail.com","test");
+    }
+
+    @And("I tap on SUBMIT button")
     public void i_tap_on_submit_button() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        taskOnePage.clickSubmit();
     }
+
     @Then("I see a pop-up window with a message {string}")
     public void i_see_a_pop_up_window_with_a_message(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        taskOnePage.successPopUpDisplayed();
     }
+
+    @Then("I see a pop-up window with a error message {string}")
+    public void i_see_a_pop_up_window_with_a_error_message(String string){
+        taskOnePage.textDisplayed(string);
+    }
+
 }
