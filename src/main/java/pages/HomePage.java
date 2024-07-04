@@ -11,8 +11,12 @@ import org.openqa.selenium.support.PageFactory;
 public class HomePage {
     private final AppiumDriver driver;
 
-    // Elements
+    // Android elements
+    private static final String header = "headerTitle";
     private static final String partPrefix = "scenario";
+
+    // iOS Elements
+    private static final String iOSHeader = "XCUIElementTypeStaticText";
 
     public HomePage(AppiumDriver driver) {
         this.driver = driver;
@@ -25,7 +29,16 @@ public class HomePage {
         return driver.findElement(By.id(dynamicId));
     }
 
+    public void headerDisplayed(){
+        driver.findElement(By.id(header)).isDisplayed();
+    }
+
     public void clickPartButton(int partNumber) {
         getPartButton(partNumber).click();
+    }
+
+    // iOS Specific Steps
+    public void iOSHeaderDisplayed(){
+        driver.findElement(By.className(iOSHeader));
     }
 }
