@@ -10,12 +10,12 @@ Feature: Tests
     Then I see a pop-up window with a message "Success"
 
   @PartOne
-  Scenario:	Submit the form with invalid username
-    Given	I open the Test App
-    When	I tap on "PART 1" button to open Part 1 screen
-    And	I input invalid username in the form
-    And	I tap on SUBMIT button
-    Then	I see a pop-up window with a error message "Incorrect username!"
+  Scenario: Submit the form with invalid username
+    Given I open the Test App
+    When I tap on "PART 1" button to open Part 1 screen
+    And I input invalid username in the form
+    And I tap on SUBMIT button
+    Then I see a pop-up window with a error message "Incorrect username!"
 
 # Tests Part 2
   @ParTwo
