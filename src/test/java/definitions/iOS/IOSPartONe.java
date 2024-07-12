@@ -1,36 +1,45 @@
 package definitions.iOS;
 
 import io.appium.java_client.AppiumDriver;
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
+import io.cucumber.java.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
 import pages.HomePage;
 import pages.TaskOnePage;
+
 import utils.DriverSetup;
 
 public class IOSPartONe {
 
-    private DriverSetup driverSetup;
-    private AppiumDriver driver;
-    private HomePage homePage;
-    private TaskOnePage taskOnePage;
+    private static DriverSetup driverSetup;
+    private static AppiumDriver driver;
+    private static HomePage homePage;
+    private static TaskOnePage taskOnePage;
+
+    @BeforeAll
+    public static void beforeAll() {
+        driverSetup = new DriverSetup();
+        driverSetup.startAppiumServer();
+    }
+
+    @AfterAll
+    public static void afterAll(){
+        driverSetup.stopAppiumServer();
+    }
 
     @Before
-    public void setUp() {
-        driverSetup = new DriverSetup();
-        driverSetup.setUp("iOS");
+    public void setUp(Scenario scenario){
+        driverSetup.beforeScenario(scenario.getName(),"iOS");
+
         driver = driverSetup.getDriver();
         homePage = new HomePage(driver);
         taskOnePage = new TaskOnePage(driver);
     }
-
     @After
-    public void tearDown(){
-        driverSetup.tearDown();
-    }
+    public static void tearDown(Scenario scenario){ driverSetup.afterScenario(scenario.getName(),scenario.isFailed());}
 
     @Given("I open the Test App")
     public void i_open_the_test_app() {
@@ -44,11 +53,11 @@ public class IOSPartONe {
 
     @And("I input valid user credentials in the form")
     public void i_input_valid_user_credentials_in_the_form() {
-        taskOnePage.iOSEnterCredentials("Ivos","ivo.sorokins@gmail.com","ivo17IVO!");
+        taskOnePage.iOSEnterCredentials("IvoS17","ivo.sorokins@gmail.com","ivo17IVO!");
     }
     @And("I input invalid username in the form")
     public void i_input_invalid_user_credentials_in_the_form(){
-        taskOnePage.iOSEnterCredentials("Ivo","gmail.com","test");
+        taskOnePage.iOSEnterCredentials("I","gmailcom","tst");
     }
 
     @And("I tap on SUBMIT button")
@@ -58,7 +67,7 @@ public class IOSPartONe {
 
     @Then("I see a pop-up window with a message {string}")
     public void i_see_a_pop_up_window_with_a_message(String string) {
-        taskOnePage.iOSSuccessPopUpDisplayed();
+        taskOnePage.iOSTextDisplayed(string);
     }
 
     @Then("I see a pop-up window with a error message {string}")
