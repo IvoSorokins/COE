@@ -5,33 +5,35 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
-import io.qameta.allure.Step;
 
 import org.openqa.selenium.Platform;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.Listeners;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
 
+import static utils.LoggerUtil.logMessage;
+
 
 /**
  * Utility class for setting up the Appium driver
  */
-@Listeners({ TestListener.class })
 public class DriverSetup extends ConfigReader {
 
     /**
      * The instance of the Appium driver
      */
     public static AppiumDriver driver;
+    private Process appiumProcess;
     public void setUp(String platform) {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
+        logMessage("Setting Up Capabilities");
         if (platform.equals("Android")) {
             capabilities.setPlatform(Platform.ANDROID);
             capabilities.setCapability(UiAutomator2Options.DEVICE_NAME_OPTION, getProperty("android.device.name"));
@@ -75,16 +77,49 @@ public class DriverSetup extends ConfigReader {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
-    public AppiumDriver getDriver(){
-        return driver;
+    public AppiumDriver getDriver(){return driver;}
+
+    public void tearDown() {driver.quit(); }
+
+    public void startAppiumServer() {
+        logMessage("Starting Appium Server");
+        try {
+            String[] command = {"appium"};
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
+            appiumProcess = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(appiumProcess.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+                if (line.contains("Appium REST http interface listener started")) {
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            logMessage(String.valueOf(e));
+        }
     }
 
-    /**
-     * Tears down the Appium driver after each test method
-     */
-    @Step("Driver is closed")
-    @AfterMethod(alwaysRun = true)
-    public void tearDown() {
-        driver.quit();
+    public void stopAppiumServer() {
+        if (appiumProcess != null) {
+            logMessage("Stopping Appium Server");
+            appiumProcess.destroy();
+        }
+    }
+
+    public void beforeScenario(String scenarioName, String platform) {
+        logMessage("Starting scenario: " + scenarioName);
+        setUp(platform);
+
+    }
+
+    public void afterScenario(String scenarioName, boolean isFailed) {
+        if (isFailed) {
+            ScreenshotUtil.captureScreenshot(driver, scenarioName, "fail");
+        } else {
+            ScreenshotUtil.captureScreenshot(driver, scenarioName, "pass");
+        }
+        logMessage("Ending scenario: " + scenarioName);
+        tearDown();
     }
 }
