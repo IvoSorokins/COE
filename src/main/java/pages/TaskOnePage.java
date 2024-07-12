@@ -7,6 +7,7 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 
+
 public class TaskOnePage {
     private final AppiumDriver driver;
 
@@ -18,7 +19,6 @@ public class TaskOnePage {
     private static final String editEmailField = "EmailAddress";
     private static final String editPasswordField = "Password";
     private static final String submitButton = "submit";
-    private static final String successPopUp = "textView";
 
     // iOs Elements
     private static final String iOSHeader = "XCUIElementTypeNavigationBar";
@@ -27,9 +27,6 @@ public class TaskOnePage {
     private static final String iOSEditEmailField = "email";
     private static final String iOSEditPasswordField = "password";
     private static final String iOSSubmitButton = "submitButton"; // Accesability
-    private static final String iOSSuccessPopUp = "XCUIElementTypeAlert";
-
-
 
 
     public TaskOnePage(AppiumDriver driver) {
@@ -51,10 +48,6 @@ public class TaskOnePage {
         driver.findElement(By.id(submitButton)).click();
     }
 
-    public void successPopUpDisplayed(){
-        driver.findElement(By.id(successPopUp)).isDisplayed();
-    }
-
     public void textDisplayed(String message){
         driver.findElement(By.xpath("//android.widget.TextView[contains(@text, '" + message  + "')]"));
     }
@@ -71,10 +64,6 @@ public class TaskOnePage {
     }
     public void iOSClickSubmit(){
         driver.findElement(new AppiumBy.ByAccessibilityId(iOSSubmitButton)).click();
-    }
-
-    public void iOSSuccessPopUpDisplayed(){
-        driver.findElement(By.className(iOSSuccessPopUp)).isDisplayed();
     }
 
     public void iOSTextDisplayed(String message){
