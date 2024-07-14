@@ -28,6 +28,7 @@ public class IOSPartONe {
     @AfterAll
     public static void afterAll(){
         driverSetup.stopAppiumServer();
+        driverSetup.generateAllureReport();
     }
 
     @Before

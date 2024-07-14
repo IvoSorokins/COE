@@ -30,6 +30,7 @@ public class AndroidPartOne {
     @AfterAll
     public static void afterAll(){
         driverSetup.stopAppiumServer();
+        driverSetup.generateAllureReport();
     }
 
     @Before

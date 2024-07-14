@@ -10,6 +10,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -29,6 +30,7 @@ public class DriverSetup extends ConfigReader {
      */
     public static AppiumDriver driver;
     private Process appiumProcess;
+
     public void setUp(String platform) {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -121,5 +123,34 @@ public class DriverSetup extends ConfigReader {
         }
         logMessage("Ending scenario: " + scenarioName);
         tearDown();
+    }
+
+    public static void generateAllureReport() {
+        try {
+            // Attach screenshots to Report
+
+            ProcessBuilder processBuilder = new ProcessBuilder();
+            // Modify the command to directly generate an HTML report
+            processBuilder.command("bash", "-c", "allure serve allure-results");
+
+            Process process = processBuilder.start();
+
+            // Read the output from the process
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+
+            // Wait for the process to complete
+            int exitCode = process.waitFor();
+            if (exitCode == 0) {
+                System.out.println("Allure report generation completed successfully.");
+            } else {
+                System.out.println("Allure report generation failed.");
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
