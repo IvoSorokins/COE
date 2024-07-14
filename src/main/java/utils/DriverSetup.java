@@ -25,9 +25,6 @@ import static utils.LoggerUtil.logMessage;
  */
 public class DriverSetup extends ConfigReader {
 
-    /**
-     * The instance of the Appium driver
-     */
     public static AppiumDriver driver;
     private Process appiumProcess;
 
@@ -48,13 +45,13 @@ public class DriverSetup extends ConfigReader {
             capabilities.setCapability(UiAutomator2Options.NEW_COMMAND_TIMEOUT_OPTION, getProperty("newCommandTimeout"));
             capabilities.setCapability(UiAutomator2Options.AUTO_GRANT_PERMISSIONS_OPTION, getProperty("autoGrantPermissions"));
 
-
             try {
                 driver = new AndroidDriver(new URI(getProperty("appiumURL")).toURL(), capabilities);
             } catch (MalformedURLException | URISyntaxException e) {
                 throw new RuntimeException(e);
             }
         }
+
         else if(platform.equals("iOS")) {
             XCUITestOptions options = new XCUITestOptions();
             options
@@ -127,9 +124,8 @@ public class DriverSetup extends ConfigReader {
 
     public static void generateAllureReport() {
         try {
-            // Attach screenshots to Report
-
             ProcessBuilder processBuilder = new ProcessBuilder();
+
             // Modify the command to directly generate an HTML report
             processBuilder.command("bash", "-c", "allure serve allure-results");
 

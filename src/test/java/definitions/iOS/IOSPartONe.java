@@ -1,6 +1,7 @@
 package definitions.iOS;
 
 import io.appium.java_client.AppiumDriver;
+
 import io.cucumber.java.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -39,6 +40,7 @@ public class IOSPartONe {
         homePage = new HomePage(driver);
         taskOnePage = new TaskOnePage(driver);
     }
+
     @After
     public static void tearDown(Scenario scenario){ driverSetup.afterScenario(scenario.getName(),scenario.isFailed());}
 
@@ -46,6 +48,7 @@ public class IOSPartONe {
     public void i_open_the_test_app() {
         homePage.iOSHeaderDisplayed();
     }
+
     @When("I tap on {string} button to open Part {int} screen")
     public void i_tap_on_button_to_open_part_screen(String string, Integer int1) {
         homePage.clickPartButton(int1);
@@ -56,6 +59,7 @@ public class IOSPartONe {
     public void i_input_valid_user_credentials_in_the_form() {
         taskOnePage.iOSEnterCredentials("IvoS17","ivo.sorokins@gmail.com","ivo17IVO!");
     }
+
     @And("I input invalid username in the form")
     public void i_input_invalid_user_credentials_in_the_form(){
         taskOnePage.iOSEnterCredentials("I","gmailcom","tst");
@@ -75,8 +79,4 @@ public class IOSPartONe {
     public void i_see_a_pop_up_window_with_a_error_message(String string){
         taskOnePage.iOSTextDisplayed(string);
     }
-
-//    TODO:
-//     1.) Fix Reports
-
 }

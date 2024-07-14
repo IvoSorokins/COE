@@ -41,6 +41,7 @@ public class AndroidPartOne {
         homePage = new HomePage(driver);
         taskOnePage = new TaskOnePage(driver);
     }
+
     @After
     public static void tearDown(Scenario scenario){driverSetup.afterScenario(scenario.getName(),scenario.isFailed());}
 
@@ -51,7 +52,6 @@ public class AndroidPartOne {
 
     @When("I tap on {string} button to open Part {int} screen")
     public void i_tap_on_button_to_open_part_screen(String string, Integer int1) {
-
         homePage.clickPartButton(int1);
         taskOnePage.headerDisplayed();
     }
@@ -80,5 +80,4 @@ public class AndroidPartOne {
     public void i_see_a_pop_up_window_with_a_error_message(String string){
         taskOnePage.textDisplayed(string);
     }
-
 }

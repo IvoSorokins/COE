@@ -9,6 +9,4 @@ import io.cucumber.testng.CucumberOptions;
             tags = "@PartOne",
             plugin = {"pretty", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"})
 
-    public class AndroidTestRunner extends AbstractTestNGCucumberTests {
-
-    }
+    public class AndroidTestRunner extends AbstractTestNGCucumberTests {}
