@@ -8,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import org.testng.Assert;
 import pages.HomePage;
 import pages.TaskOnePage;
 
@@ -50,10 +51,11 @@ public class AndroidPartOne {
         homePage.headerDisplayed();
     }
 
-    @When("I tap on {string} button to open Part {int} screen")
-    public void i_tap_on_button_to_open_part_screen(String string, Integer int1) {
-        homePage.clickPartButton(int1);
-        taskOnePage.headerDisplayed();
+    @When("I tap on {string} button to open Part 1 screen")
+    public void i_tap_on_button_to_open_part_screen(String string) {
+        homePage.clickPartButton(1);
+        Assert.assertEquals(string, taskOnePage.getHeaderTitle());
+
     }
 
     @And("I input valid user credentials in the form")
@@ -73,11 +75,11 @@ public class AndroidPartOne {
 
     @Then("I see a pop-up window with a message {string}")
     public void i_see_a_pop_up_window_with_a_message(String string) {
-        taskOnePage.textDisplayed(string);
+        Assert.assertEquals(string , taskOnePage.getTextDisplayed());
     }
 
     @Then("I see a pop-up window with a error message {string}")
     public void i_see_a_pop_up_window_with_a_error_message(String string){
-        taskOnePage.textDisplayed(string);
+        Assert.assertEquals(string , taskOnePage.getTextDisplayed());
     }
 }

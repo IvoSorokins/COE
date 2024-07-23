@@ -1,32 +1,40 @@
 package pages;
-
-import io.appium.java_client.AppiumBy;
+;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.PageFactory;
 
 
 public class TaskOnePage {
     private final AppiumDriver driver;
 
-    // Android elements
-    private static final String header = "headerTitle";
+    @AndroidFindBy(id = "headerTitle")
+    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`name == \"Part 1\"`]")
+    RemoteWebElement headerTitle;
 
-    private static final String editFieldPrefix = "editTextText";
-    private static final String editNameField = "PersonName";
-    private static final String editEmailField = "EmailAddress";
-    private static final String editPasswordField = "Password";
-    private static final String submitButton = "submit";
+    @AndroidFindBy(id = "editTextTextPersonName")
+    @iOSXCUITFindBy(accessibility = "usernameTextField")
+    RemoteWebElement editNameField;
 
-    // iOs Elements
-    private static final String iOSHeader = "XCUIElementTypeNavigationBar";
-    private static final String iOSEditFieldPrefix = "TextField";
-    private static final String iOSEditNameField = "username";
-    private static final String iOSEditEmailField = "email";
-    private static final String iOSEditPasswordField = "password";
-    private static final String iOSSubmitButton = "submitButton"; // Accesability
+    @AndroidFindBy(id = "editTextTextEmailAddress")
+    @iOSXCUITFindBy(accessibility = "emailTextField")
+    RemoteWebElement editEmailField;
+
+    @AndroidFindBy(id = "editTextTextPassword")
+    @iOSXCUITFindBy(accessibility = "passwordTextField")
+    RemoteWebElement editPasswordField;
+
+    @AndroidFindBy(id = "submit")
+    @iOSXCUITFindBy(accessibility = "submitButton")
+    RemoteWebElement submitButton;
+
+    @AndroidFindBy(id = "textView")
+    @iOSXCUITFindBy(className = "XCUIElementTypeAlert")
+    RemoteWebElement alertPopUp;
 
 
     public TaskOnePage(AppiumDriver driver) {
@@ -34,40 +42,21 @@ public class TaskOnePage {
         PageFactory.initElements(new AppiumFieldDecorator(this.driver), this);
     }
 
-    public void headerDisplayed(){
-        driver.findElement(By.id(header)).isDisplayed();
+    public String getHeaderTitle(){
+        return headerTitle.getText();
     }
 
     public void enterCredentials(String UserName, String Email, String Password){
-        driver.findElement(By.id(editFieldPrefix + editNameField)).sendKeys(UserName);
-        driver.findElement(By.id(editFieldPrefix + editEmailField)).sendKeys(Email);
-        driver.findElement(By.id(editFieldPrefix + editPasswordField)).sendKeys(Password);
+        editNameField.sendKeys(UserName);
+        editEmailField.sendKeys(Email);
+        editPasswordField.sendKeys(Password);
     }
 
     public void clickSubmit(){
-        driver.findElement(By.id(submitButton)).click();
+        submitButton.click();
     }
 
-    public void textDisplayed(String message){
-        driver.findElement(By.xpath("//android.widget.TextView[contains(@text, '" + message  + "')]"));
+    public String getTextDisplayed(){
+        return alertPopUp.getText();
     }
-
-    // iOS Specific Steps
-    public void iOSHeaderDisplayed(){
-        driver.findElement(By.className(iOSHeader)).isDisplayed();
-    }
-
-    public void iOSEnterCredentials(String UserName, String Email, String Password){
-        driver.findElement(new AppiumBy.ByAccessibilityId(iOSEditNameField + iOSEditFieldPrefix)).sendKeys(UserName);
-        driver.findElement(new AppiumBy.ByAccessibilityId(iOSEditEmailField + iOSEditFieldPrefix)).sendKeys(Email);
-        driver.findElement(new AppiumBy.ByAccessibilityId(iOSEditPasswordField + iOSEditFieldPrefix)).sendKeys(Password);
-    }
-    public void iOSClickSubmit(){
-        driver.findElement(new AppiumBy.ByAccessibilityId(iOSSubmitButton)).click();
-    }
-
-    public void iOSTextDisplayed(String message){
-        driver.findElement(By.xpath("//XCUIElementTypeStaticText[contains(@name, '" + message + "')]"));
-    }
-
 }
