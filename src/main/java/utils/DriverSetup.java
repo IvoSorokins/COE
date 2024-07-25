@@ -57,6 +57,7 @@ public class DriverSetup extends ConfigReader {
         } else if (platform.equals("iOS")) {
             XCUITestOptions options = new XCUITestOptions();
             options
+
                     .setPlatformName("iOS")
                     .setDeviceName(getProperty("ios.platform.name"))
                     .setPlatformVersion(getProperty("ios.device.platform"))
@@ -65,7 +66,8 @@ public class DriverSetup extends ConfigReader {
                     .setBundleId(getProperty("bundleId"))
                     .setDeviceName(getProperty("ios.device.name"))
                     .setNoReset(Boolean.parseBoolean(getProperty("noReset")))
-                    .setWaitForQuiescence(Boolean.parseBoolean(getProperty("waitForQuiescence")));
+                    .setWaitForQuiescence(Boolean.parseBoolean(getProperty("waitForQuiescence")))
+                    .setAutoAcceptAlerts(Boolean.parseBoolean(getProperty("autoAcceptAlerts")));
 
             try {
                 driver = new IOSDriver(new URI(getProperty("appiumURL")).toURL(), options);
