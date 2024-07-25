@@ -8,11 +8,15 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 import pages.HomePage;
 import pages.TaskOnePage;
 
 import utils.DriverSetup;
+
+import static utils.LoggerUtil.logMessage;
 
 
 public class AndroidPartOne {
@@ -44,7 +48,14 @@ public class AndroidPartOne {
     }
 
     @After
-    public static void tearDown(Scenario scenario){driverSetup.afterScenario(scenario.getName(),scenario.isFailed());}
+    public static void tearDown(Scenario scenario){
+        if (scenario.isFailed()) {
+            final byte[] screenshot = ((TakesScreenshot) DriverSetup.getDriver()).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", "Screenshot on Failure");
+        }
+        logMessage("Ending scenario: " + scenario.getName());
+        driver.quit();
+    }
 
     @Given("I open the Test App")
     public void i_open_the_test_app() {
@@ -54,8 +65,7 @@ public class AndroidPartOne {
     @When("I tap on {string} button to open Part 1 screen")
     public void i_tap_on_button_to_open_part_screen(String string) {
         homePage.clickPartButton(1);
-        Assert.assertEquals(string, taskOnePage.getHeaderTitle());
-
+        Assert.assertEquals(taskOnePage.getHeaderTitle(), string);
     }
 
     @And("I input valid user credentials in the form")
@@ -65,7 +75,7 @@ public class AndroidPartOne {
 
     @And("I input invalid username in the form")
     public void i_input_invalid_user_credentials_in_the_form(){
-        taskOnePage.enterCredentials("Ivo","gmail.com","test");
+        taskOnePage.enterCredentials("I","gmailcom","test");
     }
 
     @And("I tap on SUBMIT button")
@@ -75,11 +85,11 @@ public class AndroidPartOne {
 
     @Then("I see a pop-up window with a message {string}")
     public void i_see_a_pop_up_window_with_a_message(String string) {
-        Assert.assertEquals(string , taskOnePage.getTextDisplayed());
+        Assert.assertEquals(taskOnePage.getSuccessPopUpText(), string);
     }
 
     @Then("I see a pop-up window with a error message {string}")
     public void i_see_a_pop_up_window_with_a_error_message(String string){
-        Assert.assertEquals(string , taskOnePage.getTextDisplayed());
+        Assert.assertTrue(taskOnePage.doesFailPopUpContain(string));
     }
 }

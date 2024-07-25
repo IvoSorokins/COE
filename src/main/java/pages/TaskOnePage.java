@@ -1,12 +1,15 @@
 package pages;
-;
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.PageFactory;
+
+import static com.google.common.base.Ascii.toUpperCase;
+
 
 
 public class TaskOnePage {
@@ -33,8 +36,17 @@ public class TaskOnePage {
     RemoteWebElement submitButton;
 
     @AndroidFindBy(id = "textView")
-    @iOSXCUITFindBy(className = "XCUIElementTypeAlert")
-    RemoteWebElement alertPopUp;
+    @iOSXCUITFindBy(accessibility = "Success")
+    RemoteWebElement successPopUp;
+
+    @AndroidFindBy(id = "textView")
+    @iOSXCUITFindBy(accessibility = "Incorrect username! Expected to match: ^[a-zA-Z0-9]{4,}$\n" +
+            "\n" +
+            "Incorrect email! Expected to match: ^[a-zA-Z0-9].+@[a-z0-9].+\\.[a-z].+$\n" +
+            "\n" +
+            "Incorrect password! Expected to match: " +
+            "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{8,}$")
+    RemoteWebElement failPopUp;
 
 
     public TaskOnePage(AppiumDriver driver) {
@@ -43,7 +55,7 @@ public class TaskOnePage {
     }
 
     public String getHeaderTitle(){
-        return headerTitle.getText();
+        return toUpperCase(headerTitle.getText());
     }
 
     public void enterCredentials(String UserName, String Email, String Password){
@@ -56,7 +68,17 @@ public class TaskOnePage {
         submitButton.click();
     }
 
-    public String getTextDisplayed(){
-        return alertPopUp.getText();
+    // TODO
+    //  1.) Fix Screenshots
+    public String getSuccessPopUpText(){
+        return successPopUp.getAttribute("name");
+    }
+
+    public String getFailPopUpText(){
+        return failPopUp.getText();
+    }
+
+    public boolean doesFailPopUpContain(String expectedText){
+        return getFailPopUpText().contains("Ivo");
     }
 }

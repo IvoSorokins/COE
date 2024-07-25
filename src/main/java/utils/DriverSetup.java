@@ -8,8 +8,10 @@ import io.appium.java_client.ios.options.XCUITestOptions;
 
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.Listeners;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -23,6 +25,7 @@ import static utils.LoggerUtil.logMessage;
 /**
  * Utility class for setting up the Appium driver
  */
+@Listeners({ AllureListener.class })
 public class DriverSetup extends ConfigReader {
 
     public static AppiumDriver driver;
@@ -76,9 +79,9 @@ public class DriverSetup extends ConfigReader {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
-    public AppiumDriver getDriver(){return driver;}
-
-    public void tearDown() {driver.quit(); }
+    public static AppiumDriver getDriver() {
+        return driver;
+    }
 
     public void startAppiumServer() {
         logMessage("Starting Appium Server");
@@ -112,22 +115,9 @@ public class DriverSetup extends ConfigReader {
 
     }
 
-    public void afterScenario(String scenarioName, boolean isFailed) {
-        if (isFailed) {
-            ScreenshotUtil.captureScreenshot(driver, scenarioName, "fail");
-        } else {
-            ScreenshotUtil.captureScreenshot(driver, scenarioName, "pass");
-        }
-        logMessage("Ending scenario: " + scenarioName);
-        tearDown();
-    }
-
     public static void generateAllureReport() {
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder();
-
-            // Modify the command to directly generate an HTML report
-            processBuilder.command("bash", "-c", "allure serve allure-results");
+            ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", "allure serve allure-results");
 
             Process process = processBuilder.start();
 
