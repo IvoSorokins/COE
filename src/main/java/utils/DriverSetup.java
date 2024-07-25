@@ -53,9 +53,8 @@ public class DriverSetup extends ConfigReader {
             } catch (MalformedURLException | URISyntaxException e) {
                 throw new RuntimeException(e);
             }
-        }
 
-        else if(platform.equals("iOS")) {
+        } else if (platform.equals("iOS")) {
             XCUITestOptions options = new XCUITestOptions();
             options
                     .setPlatformName("iOS")
