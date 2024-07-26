@@ -118,23 +118,23 @@ public class DriverSetup extends ConfigReader {
 
     public static void generateAllureReport() {
         try {
-            ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c", "allure serve allure-results");
-
+            ProcessBuilder processBuilder = new ProcessBuilder
+                    ("bash", "-c", "allure generate allure-results --single-file");
             Process process = processBuilder.start();
 
             // Read the output from the process
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                logMessage(line);
             }
 
             // Wait for the process to complete
             int exitCode = process.waitFor();
             if (exitCode == 0) {
-                System.out.println("Allure report generation completed successfully.");
+                logMessage("Allure report generation completed successfully.");
             } else {
-                System.out.println("Allure report generation failed.");
+                logMessage("Allure report generation failed.");
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
