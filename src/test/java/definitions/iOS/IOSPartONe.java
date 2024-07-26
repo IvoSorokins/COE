@@ -8,6 +8,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import io.qameta.allure.Allure;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 
 import pages.HomePage;
@@ -36,7 +39,7 @@ public class IOSPartONe {
     }
 
     @Before
-    public void setUp(Scenario scenario){
+    public void before(Scenario scenario){
         driverSetup.beforeScenario(scenario.getName(),"iOS");
 
         driver = driverSetup.getDriver();
@@ -45,10 +48,25 @@ public class IOSPartONe {
     }
 
     @After
-    public static void tearDown(Scenario scenario){
-        logMessage("Ending scenario: " + scenario.getName());
-        driver.quit();
+    public void tearDown(Scenario scenario){
+        if (scenario.isFailed()) {
+            // Take screenshot
+            TakesScreenshot screenshot = (TakesScreenshot) driver;
+            byte[] screenshotBytes = screenshot.getScreenshotAs(OutputType.BYTES);
+
+            // Attach screenshot to Allure report
+            Allure.getLifecycle().addAttachment(
+                    "Screenshot on failure", "image/png", "png", screenshotBytes);
+            logMessage("Added Attachment: " + screenshotBytes);
+        }
+
+        // Log message and quit driver
+        System.out.println("Ending scenario: " + scenario.getName());
+        if (driver != null) {
+            driver.quit();
+        }
     }
+
 
     @Given("I open the Test App")
     public void i_open_the_test_app() {

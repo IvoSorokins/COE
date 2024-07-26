@@ -8,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
@@ -49,8 +50,22 @@ public class AndroidPartOne {
 
     @After
     public static void tearDown(Scenario scenario){
-        logMessage("Ending scenario: " + scenario.getName());
-        driver.quit();
+        if (scenario.isFailed()) {
+            // Take screenshot
+            TakesScreenshot screenshot = (TakesScreenshot) driver;
+            byte[] screenshotBytes = screenshot.getScreenshotAs(OutputType.BYTES);
+
+            // Attach screenshot to Allure report
+            Allure.getLifecycle().addAttachment(
+                    "Screenshot on failure", "image/png", "png", screenshotBytes);
+            logMessage("Added Attachment: " + screenshotBytes);
+        }
+
+        // Log message and quit driver
+        System.out.println("Ending scenario: " + scenario.getName());
+        if (driver != null) {
+            driver.quit();
+        }
     }
 
     @Given("I open the Test App")
