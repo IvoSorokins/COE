@@ -118,7 +118,7 @@ public class DriverSetup extends ConfigReader {
     public static void generateAllureReport() {
         try {
             ProcessBuilder processBuilder = new ProcessBuilder
-                    ("bash", "-c", "allure generate allure-results --single-file");
+                    ("bash", "-c", "allure generate allure-results --single-file  --clean");
             Process process = processBuilder.start();
 
             // Read the output from the process
