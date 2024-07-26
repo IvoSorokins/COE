@@ -8,15 +8,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 
 import pages.HomePage;
 import pages.TaskOnePage;
 
 import utils.DriverSetup;
-
 import static utils.LoggerUtil.logMessage;
 
 public class IOSPartONe {
@@ -48,14 +45,9 @@ public class IOSPartONe {
     }
 
     @After
-    public static void tearDown(Scenario scenario){ if (scenario.isFailed()) {
-        if (scenario.isFailed()) {
-            final byte[] screenshot = ((TakesScreenshot) DriverSetup.getDriver()).getScreenshotAs(OutputType.BYTES);
-            scenario.attach(screenshot, "image/png", "Screenshot on Failure");
-        }
+    public static void tearDown(Scenario scenario){
         logMessage("Ending scenario: " + scenario.getName());
         driver.quit();
-    }
     }
 
     @Given("I open the Test App")

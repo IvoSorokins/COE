@@ -8,7 +8,6 @@ import io.appium.java_client.ios.options.XCUITestOptions;
 
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.Listeners;
 
 import java.io.BufferedReader;
 
@@ -25,7 +24,7 @@ import static utils.LoggerUtil.logMessage;
 /**
  * Utility class for setting up the Appium driver
  */
-@Listeners({ AllureListener.class })
+
 public class DriverSetup extends ConfigReader {
 
     public static AppiumDriver driver;

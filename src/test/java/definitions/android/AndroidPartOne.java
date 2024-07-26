@@ -49,10 +49,6 @@ public class AndroidPartOne {
 
     @After
     public static void tearDown(Scenario scenario){
-        if (scenario.isFailed()) {
-            final byte[] screenshot = ((TakesScreenshot) DriverSetup.getDriver()).getScreenshotAs(OutputType.BYTES);
-            scenario.attach(screenshot, "image/png", "Screenshot on Failure");
-        }
         logMessage("Ending scenario: " + scenario.getName());
         driver.quit();
     }
