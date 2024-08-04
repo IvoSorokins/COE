@@ -10,6 +10,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
@@ -23,11 +24,9 @@ import static utils.LoggerUtil.logMessage;
 /**
  * Utility class for setting up the Appium driver
  */
+
 public class DriverSetup extends ConfigReader {
 
-    /**
-     * The instance of the Appium driver
-     */
     public static AppiumDriver driver;
     private Process appiumProcess;
 
@@ -48,16 +47,16 @@ public class DriverSetup extends ConfigReader {
             capabilities.setCapability(UiAutomator2Options.NEW_COMMAND_TIMEOUT_OPTION, getProperty("newCommandTimeout"));
             capabilities.setCapability(UiAutomator2Options.AUTO_GRANT_PERMISSIONS_OPTION, getProperty("autoGrantPermissions"));
 
-
             try {
                 driver = new AndroidDriver(new URI(getProperty("appiumURL")).toURL(), capabilities);
             } catch (MalformedURLException | URISyntaxException e) {
                 throw new RuntimeException(e);
             }
-        }
-        else if(platform.equals("iOS")) {
+
+        } else if (platform.equals("iOS")) {
             XCUITestOptions options = new XCUITestOptions();
             options
+
                     .setPlatformName("iOS")
                     .setDeviceName(getProperty("ios.platform.name"))
                     .setPlatformVersion(getProperty("ios.device.platform"))
@@ -66,7 +65,8 @@ public class DriverSetup extends ConfigReader {
                     .setBundleId(getProperty("bundleId"))
                     .setDeviceName(getProperty("ios.device.name"))
                     .setNoReset(Boolean.parseBoolean(getProperty("noReset")))
-                    .setWaitForQuiescence(Boolean.parseBoolean(getProperty("waitForQuiescence")));
+                    .setWaitForQuiescence(Boolean.parseBoolean(getProperty("waitForQuiescence")))
+                    .setAutoAcceptAlerts(Boolean.parseBoolean(getProperty("autoAcceptAlerts")));
 
             try {
                 driver = new IOSDriver(new URI(getProperty("appiumURL")).toURL(), options);
@@ -79,9 +79,9 @@ public class DriverSetup extends ConfigReader {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
     }
 
-    public AppiumDriver getDriver(){return driver;}
-
-    public void tearDown() {driver.quit(); }
+    public static AppiumDriver getDriver() {
+        return driver;
+    }
 
     public void startAppiumServer() {
         logMessage("Starting Appium Server");
@@ -115,39 +115,25 @@ public class DriverSetup extends ConfigReader {
 
     }
 
-    public void afterScenario(String scenarioName, boolean isFailed) {
-        if (isFailed) {
-            ScreenshotUtil.captureScreenshot(driver, scenarioName, "fail");
-        } else {
-            ScreenshotUtil.captureScreenshot(driver, scenarioName, "pass");
-        }
-        logMessage("Ending scenario: " + scenarioName);
-        tearDown();
-    }
-
     public static void generateAllureReport() {
         try {
-            // Attach screenshots to Report
-
-            ProcessBuilder processBuilder = new ProcessBuilder();
-            // Modify the command to directly generate an HTML report
-            processBuilder.command("bash", "-c", "allure serve allure-results");
-
+            ProcessBuilder processBuilder = new ProcessBuilder
+                    ("bash", "-c", "allure generate allure-results --single-file  --clean");
             Process process = processBuilder.start();
 
             // Read the output from the process
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                logMessage(line);
             }
 
             // Wait for the process to complete
             int exitCode = process.waitFor();
             if (exitCode == 0) {
-                System.out.println("Allure report generation completed successfully.");
+                logMessage("Allure report generation completed successfully.");
             } else {
-                System.out.println("Allure report generation failed.");
+                logMessage("Allure report generation failed.");
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

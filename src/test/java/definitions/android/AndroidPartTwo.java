@@ -1,26 +1,23 @@
 package definitions.android;
 
 import io.appium.java_client.AppiumDriver;
-
 import io.cucumber.java.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
 import io.qameta.allure.Allure;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 import pages.HomePage;
 import pages.TaskOnePage;
-
 import utils.DriverSetup;
 
 import static utils.LoggerUtil.logMessage;
 
 
-public class AndroidPartOne {
+public class AndroidPartTwo {
 
     private static DriverSetup driverSetup;
     private static AppiumDriver driver;
@@ -73,34 +70,29 @@ public class AndroidPartOne {
         homePage.headerDisplayed();
     }
 
-    @When("I tap on {string} button to open Part 1 screen")
+    @When("I tap on {string} button to open Part 2 screen")
     public void i_tap_on_button_to_open_part_screen(String string) {
-        homePage.clickPartButton(1);
+        homePage.clickPartButton(2);
         Assert.assertEquals(taskOnePage.getHeaderTitle(), string);
     }
-
-    @And("I input valid user credentials in the form")
-    public void i_input_valid_user_credentials_in_the_form() {
-        taskOnePage.enterCredentials("Ivo17","ivo@gmail.com","test17IVO!");
+    @And("I save list items while scrolling through the list")
+    public void i_save_list_items_while_scrolling_through_the_list() {
+        // Implement logic to save list items while scrolling
     }
 
-    @And("I input invalid username in the form")
-    public void i_input_invalid_user_credentials_in_the_form(){
-        taskOnePage.enterCredentials("I","gmailcom","test");
+    @Then("I validate the saved items are in an alphabetical order")
+    public void i_validate_the_saved_items_are_in_an_alphabetical_order() {
+        // Implement logic to validate that the items are in alphabetical order
     }
 
-    @And("I tap on SUBMIT button")
-    public void i_tap_on_submit_button() {
-        taskOnePage.clickSubmit();
+    @Then("I validate the {string} has a * symbol added")
+    public void i_validate_the_has_symbol_added(String items){
+
     }
 
-    @Then("I see a pop-up window with a message {string}")
-    public void i_see_a_pop_up_window_with_a_message(String string) {
-        Assert.assertEquals(taskOnePage.getSuccessPopUpText(), string);
-    }
+    @Then("I validate the {string} categories are empty")
+    public void i_validate_the_categories_are_empty(String categories){}
 
-    @Then("I see a pop-up window with a error message {string}")
-    public void i_see_a_pop_up_window_with_a_error_message(String string){
-        Assert.assertTrue(taskOnePage.doesFailPopUpContain(string));
-    }
+    @Then("I validate the {string} categories have 3 or more items")
+    public void i_validate_the_categories_have_3_or_more_items(String categories){}
 }

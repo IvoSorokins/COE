@@ -2,6 +2,8 @@ package utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+
 public class LoggerUtil {
     private static final Logger logger = LogManager.getLogger(LoggerUtil.class);
     private static final String ANSI_YELLOW = "\u001B[33m";
