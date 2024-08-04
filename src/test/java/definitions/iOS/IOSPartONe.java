@@ -8,16 +8,14 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import io.qameta.allure.Allure;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 
 import pages.HomePage;
 import pages.TaskOnePage;
 
 import utils.DriverSetup;
-import static utils.LoggerUtil.logMessage;
+import utils.AssertionUtil;
+
 
 public class IOSPartONe {
 
@@ -49,17 +47,6 @@ public class IOSPartONe {
 
     @After
     public void tearDown(Scenario scenario){
-        if (scenario.isFailed()) {
-            // Take screenshot
-            TakesScreenshot screenshot = (TakesScreenshot) driver;
-            byte[] screenshotBytes = screenshot.getScreenshotAs(OutputType.BYTES);
-
-            // Attach screenshot to Allure report
-            Allure.getLifecycle().addAttachment(
-                    "Screenshot on failure", "image/png", "png", screenshotBytes);
-            logMessage("Added Attachment: " + screenshotBytes);
-        }
-
         // Log message and quit driver
         System.out.println("Ending scenario: " + scenario.getName());
         if (driver != null) {
@@ -96,11 +83,11 @@ public class IOSPartONe {
 
     @Then("I see a pop-up window with a message {string}")
     public void i_see_a_pop_up_window_with_a_message(String string) {
-        Assert.assertEquals(taskOnePage.getSuccessPopUpText(), string);
+        AssertionUtil.assertEquals(taskOnePage.getSuccessPopUpText(),string ,driver);
     }
 
     @Then("I see a pop-up window with a error message {string}")
-    public void i_see_a_pop_up_window_with_a_error_message(String string){
-        Assert.assertTrue(taskOnePage.doesFailPopUpContain(string));
+    public void i_see_a_pop_up_window_with_a_error_message(String string) {
+        AssertionUtil.assertTrue(taskOnePage.doesFailPopUpContain(string),driver);
     }
 }
