@@ -7,6 +7,6 @@ import io.cucumber.testng.CucumberOptions;
             features = {"src/test/resources/features/TestCases.feature"}, // Path to your feature files
             glue = {"definitions.android"},   // Package where your step definitions are located
             tags = "@PartOne",
-            plugin = {"pretty", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"})
+            plugin = {"pretty"})
 
     public class AndroidTestRunner extends AbstractTestNGCucumberTests {}
