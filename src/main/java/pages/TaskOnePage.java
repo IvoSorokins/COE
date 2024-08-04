@@ -76,6 +76,6 @@ public class TaskOnePage {
     }
 
     public boolean doesFailPopUpContain(String expectedText){
-        return getFailPopUpText().contains("Ivo");
+        return getFailPopUpText().contains(expectedText);
     }
 }
