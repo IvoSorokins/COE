@@ -67,9 +67,6 @@ public class TaskOnePage {
     public void clickSubmit(){
         submitButton.click();
     }
-
-    // TODO
-    //  1.) Fix Screenshots
     public String getSuccessPopUpText(){
         return successPopUp.getAttribute("name");
     }
