@@ -62,7 +62,7 @@ public class AndroidPartOne {
     @When("I tap on {string} button to open Part 1 screen")
     public void i_tap_on_button_to_open_part_screen(String string) {
         homePage.clickPartButton(1);
-        Assert.assertEquals(taskOnePage.getHeaderTitle(), string);
+        AssertionUtil.assertEquals(taskOnePage.getHeaderTitle(), string, driver);
     }
 
     @And("I input valid user credentials in the form")
