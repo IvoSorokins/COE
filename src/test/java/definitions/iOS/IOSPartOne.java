@@ -19,7 +19,7 @@ import pages.TaskOnePage;
 import utils.DriverSetup;
 import static utils.LoggerUtil.logMessage;
 
-public class IOSPartONe {
+public class IOSPartOne {
 
     private static DriverSetup driverSetup;
     private static AppiumDriver driver;
