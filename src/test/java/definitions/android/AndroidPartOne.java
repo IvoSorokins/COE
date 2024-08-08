@@ -8,9 +8,12 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import org.testng.Assert;
+
 import pages.HomePage;
 import pages.TaskOnePage;
 
+import utils.AssertionUtil;
 import utils.DriverSetup;
 
 
@@ -41,19 +44,25 @@ public class AndroidPartOne {
         homePage = new HomePage(driver);
         taskOnePage = new TaskOnePage(driver);
     }
+
     @After
-    public static void tearDown(Scenario scenario){driverSetup.afterScenario(scenario.getName(),scenario.isFailed());}
+    public static void tearDown(Scenario scenario){
+        // Log message and quit driver
+        System.out.println("Ending scenario: " + scenario.getName());
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 
     @Given("I open the Test App")
     public void i_open_the_test_app() {
         homePage.headerDisplayed();
     }
 
-    @When("I tap on {string} button to open Part {int} screen")
-    public void i_tap_on_button_to_open_part_screen(String string, Integer int1) {
-
-        homePage.clickPartButton(int1);
-        taskOnePage.headerDisplayed();
+    @When("I tap on {string} button to open Part 1 screen")
+    public void i_tap_on_button_to_open_part_screen(String string) {
+        homePage.clickPartButton(1);
+        AssertionUtil.assertEquals(taskOnePage.getHeaderTitle(), string, driver);
     }
 
     @And("I input valid user credentials in the form")
@@ -63,7 +72,7 @@ public class AndroidPartOne {
 
     @And("I input invalid username in the form")
     public void i_input_invalid_user_credentials_in_the_form(){
-        taskOnePage.enterCredentials("Ivo","gmail.com","test");
+        taskOnePage.enterCredentials("I","gmailcom","test");
     }
 
     @And("I tap on SUBMIT button")
@@ -73,12 +82,11 @@ public class AndroidPartOne {
 
     @Then("I see a pop-up window with a message {string}")
     public void i_see_a_pop_up_window_with_a_message(String string) {
-        taskOnePage.textDisplayed(string);
+        AssertionUtil.assertEquals(taskOnePage.getSuccessPopUpText(),string ,driver);
     }
 
     @Then("I see a pop-up window with a error message {string}")
-    public void i_see_a_pop_up_window_with_a_error_message(String string){
-        taskOnePage.textDisplayed(string);
+    public void i_see_a_pop_up_window_with_a_error_message(String string) {
+        AssertionUtil.assertTrue(taskOnePage.doesFailPopUpContain(string),driver);
     }
-
 }
