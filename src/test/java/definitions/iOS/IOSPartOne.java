@@ -45,7 +45,6 @@ public class IOSPartOne {
 
     @After
     public void tearDown(Scenario scenario){
-        // Log message and quit driver
         System.out.println("Ending scenario: " + scenario.getName());
         if (driver != null) {
             driver.quit();
