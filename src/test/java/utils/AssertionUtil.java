@@ -25,7 +25,7 @@ public class AssertionUtil {
             Assert.assertEquals(actual, expected);
         } catch (AssertionError e) {
             captureScreenshot(driver, "Screenshot on failure");
-            throw e; // Re-throw the exception to ensure the test is marked as failed
+            throw e;
         }
     }
 
