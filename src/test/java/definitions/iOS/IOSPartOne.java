@@ -8,8 +8,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import org.testng.Assert;
-
 import pages.HomePage;
 import pages.TaskOnePage;
 
@@ -17,7 +15,7 @@ import utils.DriverSetup;
 import utils.AssertionUtil;
 
 
-public class IOSPartONe {
+public class IOSPartOne {
 
     private static DriverSetup driverSetup;
     private static AppiumDriver driver;
