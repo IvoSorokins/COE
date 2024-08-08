@@ -40,12 +40,7 @@ public class TaskOnePage {
     RemoteWebElement successPopUp;
 
     @AndroidFindBy(id = "textView")
-    @iOSXCUITFindBy(accessibility = "Incorrect username! Expected to match: ^[a-zA-Z0-9]{4,}$\n" +
-            "\n" +
-            "Incorrect email! Expected to match: ^[a-zA-Z0-9].+@[a-z0-9].+\\.[a-z].+$\n" +
-            "\n" +
-            "Incorrect password! Expected to match: " +
-            "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{8,}$")
+    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[contains(@name, 'Incorrect username')]")
     RemoteWebElement failPopUp;
 
 
