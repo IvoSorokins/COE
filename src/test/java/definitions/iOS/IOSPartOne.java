@@ -17,7 +17,7 @@ import utils.DriverSetup;
 import utils.AssertionUtil;
 
 
-public class IOSPartONe {
+public class IOSPartOne {
 
     private static DriverSetup driverSetup;
     private static AppiumDriver driver;
