@@ -40,7 +40,7 @@ public class TaskOnePage {
     RemoteWebElement successPopUp;
 
     @AndroidFindBy(id = "textView")
-    @iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[contains(@name, 'Incorrect username')]")
+    @iOSXCUITFindBy(iOSNsPredicate = "name BEGINSWITH 'Incorrect username'")
     RemoteWebElement failPopUp;
 
 
