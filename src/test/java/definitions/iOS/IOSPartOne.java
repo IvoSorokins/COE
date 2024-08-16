@@ -1,7 +1,8 @@
 package definitions.iOS;
 
-import io.appium.java_client.AppiumDriver;
 
+
+import io.appium.java_client.AppiumDriver;
 import io.cucumber.java.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -11,46 +12,17 @@ import io.cucumber.java.en.When;
 import pages.HomePage;
 import pages.TaskOnePage;
 
-import utils.DriverSetup;
+
+import pages.TaskTwoPage;
 import utils.AssertionUtil;
 
 
 public class IOSPartOne {
 
-    private static DriverSetup driverSetup;
-    private static AppiumDriver driver;
-    private static HomePage homePage;
-    private static TaskOnePage taskOnePage;
-
-    @BeforeAll
-    public static void beforeAll() {
-        driverSetup = new DriverSetup();
-        driverSetup.startAppiumServer();
-    }
-
-    @AfterAll
-    public static void afterAll(){
-        driverSetup.stopAppiumServer();
-        driverSetup.generateAllureReport();
-    }
-
-    @Before
-    public void before(Scenario scenario){
-        driverSetup.beforeScenario(scenario.getName(),"iOS");
-
-        driver = driverSetup.getDriver();
-        homePage = new HomePage(driver);
-        taskOnePage = new TaskOnePage(driver);
-    }
-
-    @After
-    public void tearDown(Scenario scenario){
-        System.out.println("Ending scenario: " + scenario.getName());
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-
+    private HomePage homePage = IOSHooks.getHomePage();
+    private TaskOnePage taskOnePage = IOSHooks.getTaskOnePage();
+    private TaskTwoPage taskTwoPage = IOSHooks.getTaskTwoPage();
+    private AppiumDriver driver = IOSHooks.getDriver();
 
     @Given("I open the Test App")
     public void i_open_the_test_app() {

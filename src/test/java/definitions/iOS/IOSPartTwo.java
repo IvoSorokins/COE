@@ -8,61 +8,34 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.HomePage;
 import pages.TaskOnePage;
+import pages.TaskTwoPage;
 import utils.AssertionUtil;
-import utils.DriverSetup;
+
 
 
 public class IOSPartTwo {
 
-    private static DriverSetup driverSetup;
-    private static AppiumDriver driver;
-    private static HomePage homePage;
-    private static TaskOnePage taskOnePage;
+    private HomePage homePage = IOSHooks.getHomePage();
+    private TaskOnePage taskOnePage = IOSHooks.getTaskOnePage();
+    private TaskTwoPage taskTwoPage = IOSHooks.getTaskTwoPage();
+    private AppiumDriver driver = IOSHooks.getDriver();
 
-    @BeforeAll
-    public static void beforeAll() {
-        driverSetup = new DriverSetup();
-        driverSetup.startAppiumServer();
-    }
-
-    @AfterAll
-    public static void afterAll(){
-        driverSetup.stopAppiumServer();
-        driverSetup.generateAllureReport();
-    }
-
-    @Before
-    public void before(Scenario scenario){
-        driverSetup.beforeScenario(scenario.getName(),"iOS");
-
-        driver = driverSetup.getDriver();
-        homePage = new HomePage(driver);
-        taskOnePage = new TaskOnePage(driver);
-    }
-
-    @After
-    public void tearDown(Scenario scenario){
-        // Log message and quit driver
-        System.out.println("Ending scenario: " + scenario.getName());
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-
-    // Part Two Specific
-
+    private String platform = IOSHooks.getPlatform();
 
     @When("I tap on {string} button to open Part 2 screen")
     public void i_tap_on_button_to_open_part_screen(String string) {
         homePage.clickPartButton(2);
-        AssertionUtil.assertEquals(taskOnePage.getHeaderTitle(), string, driver);
+        AssertionUtil.assertEquals(taskTwoPage.getHeaderTitle(), string, driver);
     }
 
     @And("I save list items while scrolling through the list")
-    public void i_save_list_items_while_scrolling_through_the_list(){}
+    public void i_save_list_items_while_scrolling_through_the_list(){
+        System.out.println(taskTwoPage.saveListItemsWhileScrolling(platform,5));
+    }
 
     @Then("I validate the saved items are in an alphabetical order")
-    public void i_validate_the_saved_items_are_in_alphabetical_order() {}
+    public void i_validate_the_saved_items_are_in_alphabetical_order() {
+    }
 
 
     @Then("I validate the {string} has a * symbol added")
