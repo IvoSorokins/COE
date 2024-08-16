@@ -18,28 +18,28 @@ Feature: Tests
     Then I see a pop-up window with a error message "Incorrect username!"
 
 # Tests Part 2
-  @ParTwo @TAT-64
+  @PartTwo @TAT-64
   Scenario:	Validate that list is in an alphabetical order
     Given	I open the Test App
     When	I tap on "PART 2" button to open Part 2 screen
     And	I save list items while scrolling through the list
     Then	I validate the saved items are in an alphabetical order
 
-  @ParTwo @TAT-65
+  @PartTwo @TAT-65
   Scenario:	Validate * symbol added to specific car manufacturer names
     Given	I open the Test App
     When	I tap on "PART 2" button to open Part 2 screen
     And	I save list items while scrolling through the list
     Then	I validate the "Mercury, Pontiac, Saturn, Scion, Suzuki" has a * symbol added
 
-  @ParTwo @TAT-66
+  @PartTwo @TAT-66
   Scenario:	Validate empty categories
     Given	I open the Test App
     When	I tap on "PART 2" button to open Part 2 screen
     And	I save list items while scrolling through the list
     Then	I validate the "E, O, Q, U, W, X, Y" categories are empty
 
-  @ParTwo @TAT-67
+  @PartTwo @TAT-67
   Scenario:	Validate categories with 3 or more items
     Given	I open the Test App
     When	I tap on "PART 2" button to open Part 2 screen
@@ -47,21 +47,21 @@ Feature: Tests
     Then	I validate the "(name categories)" categories have 3 or more items
 
 # Tests Part 3
-  @ParThree @TAT-68
+  @PartThree @TAT-68
   Scenario:	Validate total sum
     Given	I open the Test App
     When	I tap on "PART 3" button to open Part 3 screen
     And	I save all item price sum while scrolling through the item list
     Then	I validate the total sum matches all item price sum
 
-  @ParThree @TAT-69
+  @PartThree @TAT-69
   Scenario:	Validate specific brand sum
     Given	I open the Test App
     When	I tap on "PART 3" button to open Part 3 screen
     And	I save brand item price sum while scrolling through the item list
     Then	I validate a brand total sum matches that brand item price sum
 
-  @ParThree @TAT-70
+  @PartThree @TAT-70
   Scenario:	Validate all unique FAKEIMAGE names
     Given	I open the Test App
     When	I tap on "PART 3" button to open Part 3 screen
