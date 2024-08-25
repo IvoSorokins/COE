@@ -16,6 +16,7 @@ public class LoggerUtil {
      */
     public static void logMessage(String message) {
         logger.info(ANSI_YELLOW + message + ANSI_RESET);
+        // System.out.println(ANSI_YELLOW + message + ANSI_RESET); Used in case of debugging
     }
 
 }
