@@ -31,16 +31,6 @@ public class AndroidSteps {
 
     private List<String> savedItems;
 
-    @Before
-    public void before(Scenario scenario){
-        driverSetup.beforeScenario(scenario.getName(),"Android");
-
-        driver = DriverSetup.getDriver();
-        homePage = new HomePage(driver);
-        taskOnePage = new TaskOnePage(driver);
-        taskTwoPage = new TaskTwoPage(driver);
-    }
-
     @BeforeAll
     public static void beforeAll() {
         driverSetup = new DriverSetup();
@@ -62,6 +52,15 @@ public class AndroidSteps {
         }
     }
 
+    @Before
+    public void before(Scenario scenario){
+        driverSetup.beforeScenario(scenario.getName(),"Android");
+
+        driver = DriverSetup.getDriver();
+        homePage = new HomePage(driver);
+        taskOnePage = new TaskOnePage(driver);
+        taskTwoPage = new TaskTwoPage(driver);
+    }
 
     @Given("I open the Test App")
     public void i_open_the_test_app() {
@@ -99,7 +98,7 @@ public class AndroidSteps {
         AssertionUtil.assertTrue(taskOnePage.doesFailPopUpContain(string),driver);
     }
 
-    // Part 2
+     //Part 2
 
     @When("I tap on {string} button to open Part 2 screen")
     public void i_tap_on_button_to_open_part_two_screen(String string) {
@@ -128,7 +127,7 @@ public class AndroidSteps {
         }
     }
 
-    @Then("I validate the {string} categories are empty") //// ????
+    @Then("I validate the {string} categories are empty")
     public void i_validate_the_categories_are_empty(String categories) {
         List<String> emptyCategories = Arrays.asList(categories.split(", "));
         for (String category : emptyCategories) {
@@ -138,7 +137,7 @@ public class AndroidSteps {
         }
     }
 
-    @Then("I validate the {string} categories have 3 or more items") // ????
+    @Then("I validate the {string} categories have 3 or more items")
     public void i_validate_the_categories_have_3_or_more_items(String categories){
         List<String> categoriesWithItems = Arrays.asList(categories.split(", "));
         for (String category : categoriesWithItems) {

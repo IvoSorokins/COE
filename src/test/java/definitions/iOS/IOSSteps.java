@@ -1,8 +1,8 @@
 package definitions.iOS;
 
 
-
 import io.appium.java_client.AppiumDriver;
+
 import io.cucumber.java.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -11,11 +11,10 @@ import io.cucumber.java.en.When;
 
 import pages.HomePage;
 import pages.TaskOnePage;
-
 import pages.TaskTwoPage;
+
 import utils.AssertionUtil;
 import utils.DriverSetup;
-import utils.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,16 +31,6 @@ public class IOSSteps {
     private static TaskTwoPage taskTwoPage;
 
     private List<String> savedItems;
-
-    @Before
-    public void before(Scenario scenario){
-        driverSetup.beforeScenario(scenario.getName(),"iOS");
-
-        driver = DriverSetup.getDriver();
-        homePage = new HomePage(driver);
-        taskOnePage = new TaskOnePage(driver);
-        taskTwoPage = new TaskTwoPage(driver);
-    }
 
     @BeforeAll
     public static void beforeAll() {
@@ -62,6 +51,16 @@ public class IOSSteps {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    @Before
+    public void before(Scenario scenario){
+        driverSetup.beforeScenario(scenario.getName(),"iOS");
+
+        driver = DriverSetup.getDriver();
+        homePage = new HomePage(driver);
+        taskOnePage = new TaskOnePage(driver);
+        taskTwoPage = new TaskTwoPage(driver);
     }
 
     @Given("I open the Test App")
@@ -101,7 +100,6 @@ public class IOSSteps {
     }
 
     // Part 2
-
     @When("I tap on {string} button to open Part 2 screen")
     public void i_tap_on_button_to_open_part_two_screen(String string) {
         homePage.clickPartButton(2);
@@ -129,7 +127,7 @@ public class IOSSteps {
         }
     }
 
-    @Then("I validate the {string} categories are empty") //// ????
+    @Then("I validate the {string} categories are empty")
     public void i_validate_the_categories_are_empty(String categories) {
         List<String> emptyCategories = Arrays.asList(categories.split(", "));
         for (String category : emptyCategories) {
@@ -139,7 +137,7 @@ public class IOSSteps {
         }
     }
 
-    @Then("I validate the {string} categories have 3 or more items") // ????
+    @Then("I validate the {string} categories have 3 or more items")
     public void i_validate_the_categories_have_3_or_more_items(String categories){
         List<String> categoriesWithItems = Arrays.asList(categories.split(", "));
         for (String category : categoriesWithItems) {
