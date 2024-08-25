@@ -10,9 +10,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import utils.Helpers;
 
@@ -25,10 +23,11 @@ public class TaskTwoPage {
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"Part 2\" AND label == \"Part 2\"")
     RemoteWebElement headerTitle;
 
-    @AndroidFindBy()
+    @AndroidFindBy(id = "com.example.appfortestautomation:id/brandView")
     @iOSXCUITFindBy(className = "XCUIElementTypeCollectionView")
     RemoteWebElement itemList;
 
+    @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id='com.example.appfortestautomation:id/textView']")
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"text\"")
     List<RemoteWebElement> itemsFromList;
 
@@ -41,40 +40,32 @@ public class TaskTwoPage {
         return toUpperCase(headerTitle.getText());
     }
 
-    public List<String> saveListItems() {
-        List<String> itemTexts = new ArrayList<>();
-        for (RemoteWebElement item : itemsFromList) {
-            itemTexts.add(item.getText());
-        }
-        return itemTexts;
-    }
-
-
     public List<String> saveListItemsWhileScrollingUp(String platform, int maxScrolls) {
-        List<String> itemTexts = new ArrayList<>();
-        int previousSize = 0;
+        List<String> seenItems = new ArrayList<>();
 
         for (int i = 0; i < maxScrolls; i++) {
-            List<RemoteWebElement> visibleItems = itemsFromList;
+            // Get the list of currently visible items
+            List<RemoteWebElement> currentVisibleItems = itemsFromList;
 
-            for (RemoteWebElement item : visibleItems) {
+            for (RemoteWebElement item : currentVisibleItems) {
                 String text = item.getText();
-
-                if (!itemTexts.contains(text)) {
-                    itemTexts.add(text);
+                // Filter items based on your criteria
+                if (!text.startsWith("---") && !text.contains("Zaa") && !text.contains("Zbb") && !text.contains("Zcc")) {
+                    // Check if the item is already in the seenItems list
+                    if (!seenItems.contains(text)) {
+                        seenItems.add(text);
+                    }
                 }
             }
 
-            if (itemTexts.size() == previousSize) {
+            Helpers.scroll("up", 1, driver);
+
+            if (currentVisibleItems.isEmpty()) {
                 break;
             }
-
-            previousSize = itemTexts.size();
-
-            Helpers.scroll(platform,"up", 1 ,driver);
         }
 
-        return itemTexts;
+        return seenItems;
     }
 
 }
