@@ -89,16 +89,19 @@ public class DriverSetup extends ConfigReader {
             String[] command = {"appium"};
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             appiumProcess = processBuilder.start();
+
+            // Handle the output from Appium server
             BufferedReader reader = new BufferedReader(new InputStreamReader(appiumProcess.getInputStream()));
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
                 if (line.contains("Appium REST http interface listener started")) {
+                    logMessage("Appium server started successfully.");
                     break;
                 }
             }
-        } catch (Exception e) {
-            logMessage(String.valueOf(e));
+        } catch (IOException e) {
+            logMessage("Failed to start Appium server: " + e.getMessage());
         }
     }
 
@@ -106,6 +109,11 @@ public class DriverSetup extends ConfigReader {
         if (appiumProcess != null) {
             logMessage("Stopping Appium Server");
             appiumProcess.destroy();
+            try {
+                appiumProcess.waitFor();
+            } catch (InterruptedException e) {
+                logMessage("Error while waiting for Appium server to stop: " + e.getMessage());
+            }
         }
     }
 
