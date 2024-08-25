@@ -22,7 +22,7 @@ public class TaskTwoPage {
     private final AppiumDriver driver;
 
     @AndroidFindBy(id = "headerTitle")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`name == \"Part 2\"`]")
+    @iOSXCUITFindBy(iOSNsPredicate = "name == \"Part 2\" AND label == \"Part 2\"")
     RemoteWebElement headerTitle;
 
     @AndroidFindBy()
@@ -50,14 +50,19 @@ public class TaskTwoPage {
     }
 
 
-    public List<String> saveListItemsWhileScrolling(String platform, int maxScrolls) {
-        Set<String> itemTexts = new HashSet<>();
+    public List<String> saveListItemsWhileScrollingUp(String platform, int maxScrolls) {
+        List<String> itemTexts = new ArrayList<>();
         int previousSize = 0;
 
         for (int i = 0; i < maxScrolls; i++) {
             List<RemoteWebElement> visibleItems = itemsFromList;
+
             for (RemoteWebElement item : visibleItems) {
-                itemTexts.add(item.getText());
+                String text = item.getText();
+
+                if (!itemTexts.contains(text)) {
+                    itemTexts.add(text);
+                }
             }
 
             if (itemTexts.size() == previousSize) {
@@ -66,10 +71,10 @@ public class TaskTwoPage {
 
             previousSize = itemTexts.size();
 
-            Helpers.scroll(platform,1, driver);
+            Helpers.scroll(platform,"up", 1 ,driver);
         }
 
-        return new ArrayList<>(itemTexts);
+        return itemTexts;
     }
 
 }
