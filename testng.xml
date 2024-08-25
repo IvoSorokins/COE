@@ -3,8 +3,8 @@
 <suite name="All Test Suite" parallel="tests" thread-count="4">
     <test verbose="2" name="Cucumber Tests">
         <classes>
-<!--            <class name="runner.AndroidTestRunner"/>-->
-            <class name="runner.IOSTestRunner"/>
+            <class name="runner.AndroidTestRunner"/>
+<!--            <class name="runner.IOSTestRunner"/>-->
         </classes>
     </test>
 </suite>
