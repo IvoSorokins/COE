@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static utils.LoggerUtil.logMessage;
+
 
 public class AndroidSteps {
 
@@ -46,7 +48,7 @@ public class AndroidSteps {
     @After
     public void tearDown(Scenario scenario){
         // Log message and quit driver
-        System.out.println("Ending scenario: " + scenario.getName());
+        logMessage("Ending scenario: " + scenario.getName());
         if (driver != null) {
             driver.quit();
         }
