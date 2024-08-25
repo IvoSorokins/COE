@@ -6,9 +6,6 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 
-import org.openqa.selenium.Platform;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
 import java.io.BufferedReader;
 
 import java.io.IOException;
@@ -32,31 +29,43 @@ public class DriverSetup extends ConfigReader {
 
     public void setUp(String platform) {
 
-        DesiredCapabilities capabilities = new DesiredCapabilities();
+        // Fetch the timeout value as a String from properties
+        String timeoutString = getProperty("newCommandTimeout");
+        int timeoutInMilis;
+        try {
+            timeoutInMilis = Integer.parseInt(timeoutString); // Convert String to int
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid format for newCommandTimeout: " + timeoutString, e);
+        }
+        Duration newCommandTimeout = Duration.ofMillis(timeoutInMilis);
 
-        logMessage("Setting Up Capabilities");
+        UiAutomator2Options AndroidOptions = new UiAutomator2Options();
+
+
         if (platform.equals("Android")) {
-            capabilities.setPlatform(Platform.ANDROID);
-            capabilities.setCapability(UiAutomator2Options.DEVICE_NAME_OPTION, getProperty("android.device.name"));
-            capabilities.setCapability(UiAutomator2Options.UDID_OPTION, getProperty("android.udid"));
-            capabilities.setCapability(UiAutomator2Options.PLATFORM_VERSION_OPTION, getProperty("android.platformVersion"));
-            capabilities.setCapability(UiAutomator2Options.AUTOMATION_NAME_OPTION, getProperty("android.automation.name"));
-            capabilities.setCapability(UiAutomator2Options.APP_ACTIVITY_OPTION, getProperty("appActivity"));
-            capabilities.setCapability(UiAutomator2Options.APP_PACKAGE_OPTION, getProperty("appPackage"));
-            capabilities.setCapability(UiAutomator2Options.NO_RESET_OPTION, getProperty("noReset"));
-            capabilities.setCapability(UiAutomator2Options.NEW_COMMAND_TIMEOUT_OPTION, getProperty("newCommandTimeout"));
-            capabilities.setCapability(UiAutomator2Options.AUTO_GRANT_PERMISSIONS_OPTION, getProperty("autoGrantPermissions"));
+            logMessage("Configuring Android capabilities...");
+            AndroidOptions.setPlatformName(getProperty("android.platform.name"));
+            AndroidOptions.setDeviceName(getProperty("android.device.name"));
+            AndroidOptions.setUdid(getProperty("android.udid"));
+            AndroidOptions.setPlatformVersion(getProperty("android.platformVersion"));
+            AndroidOptions.setAutomationName(getProperty("android.automation.name"));
+            AndroidOptions.setAppActivity(getProperty("appActivity"));
+            AndroidOptions.setAppPackage(getProperty("appPackage"));
+            AndroidOptions.setNoReset(Boolean.parseBoolean(getProperty("noReset")));
+            AndroidOptions.setNewCommandTimeout(newCommandTimeout);
+            AndroidOptions.setAutoGrantPermissions(Boolean.parseBoolean(getProperty("autoGrantPermissions")));
 
             try {
-                driver = new AndroidDriver(new URI(getProperty("appiumURL")).toURL(), capabilities);
+                driver = new AndroidDriver(new URI(getProperty("appiumURL")).toURL(), AndroidOptions);
             } catch (MalformedURLException | URISyntaxException e) {
                 throw new RuntimeException(e);
             }
 
         } else if (platform.equals("iOS")) {
-            XCUITestOptions options = new XCUITestOptions();
-            options
+            logMessage("Configuring iOS capabilities...");
 
+            XCUITestOptions iOSOptions = new XCUITestOptions();
+            iOSOptions
                     .setPlatformName("iOS")
                     .setDeviceName(getProperty("ios.platform.name"))
                     .setPlatformVersion(getProperty("ios.device.platform"))
@@ -69,7 +78,7 @@ public class DriverSetup extends ConfigReader {
                     .setAutoAcceptAlerts(Boolean.parseBoolean(getProperty("autoAcceptAlerts")));
 
             try {
-                driver = new IOSDriver(new URI(getProperty("appiumURL")).toURL(), options);
+                driver = new IOSDriver(new URI(getProperty("appiumURL")).toURL(), iOSOptions);
             } catch (MalformedURLException | URISyntaxException e) {
                 throw new RuntimeException(e);
             }
