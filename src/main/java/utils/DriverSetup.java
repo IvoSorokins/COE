@@ -85,8 +85,8 @@ public class DriverSetup extends ConfigReader {
         }
 
         // Wait for specified amount of time when trying to find element
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
-    }
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
+}
 
     public static AppiumDriver getDriver() {
         return driver;
@@ -127,9 +127,8 @@ public class DriverSetup extends ConfigReader {
     }
 
     public void beforeScenario(String scenarioName, String platform) {
-        logMessage("Starting scenario: " + scenarioName);
         setUp(platform);
-
+        logMessage("Starting scenario: " + scenarioName);
     }
 
     public static void generateAllureReport() {
