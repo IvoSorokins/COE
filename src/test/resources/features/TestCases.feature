@@ -11,7 +11,7 @@ Feature: Tests
 
   @PartOne @TAT-63
   Scenario: Submit the form with invalid username
-    Given I open the Test App
+    Given  I open the Test App
     When I tap on "PART 1" button to open Part 1 screen
     And I input invalid username in the form
     And I tap on SUBMIT button
@@ -19,32 +19,32 @@ Feature: Tests
 
 # Tests Part 2
   @PartTwo @TAT-64
-  Scenario:	Validate that list is in an alphabetical order
-    Given	I open the Test App
-    When	I tap on "PART 2" button to open Part 2 screen
-    And	I save list items while scrolling through the list
-    Then	I validate the saved items are in an alphabetical order
+  Scenario: Validate that list is in alphabetical order
+    Given I open the Test App
+    When I tap on "PART 2" button to open Part 2 screen
+    And I save list items while scrolling through the list
+    Then I validate the saved items are in alphabetical order
 
   @PartTwo @TAT-65
-  Scenario:	Validate * symbol added to specific car manufacturer names
-    Given	I open the Test App
-    When	I tap on "PART 2" button to open Part 2 screen
-    And	I save list items while scrolling through the list
-    Then	I validate the "Mercury, Pontiac, Saturn, Scion, Suzuki" has a * symbol added
+  Scenario: Validate * symbol added to specific car manufacturer names
+    Given I open the Test App
+    When I tap on "PART 2" button to open Part 2 screen
+    And I save list items while scrolling through the list
+    Then I validate the "Mercury, Pontiac, Saturn, Scion, Suzuki" have a * symbol added
 
   @PartTwo @TAT-66
-  Scenario:	Validate empty categories
-    Given	I open the Test App
-    When	I tap on "PART 2" button to open Part 2 screen
-    And	I save list items while scrolling through the list
-    Then	I validate the "E, O, Q, U, W, X, Y" categories are empty
+  Scenario: Validate empty categories
+    Given I open the Test App
+    When I tap on "PART 2" button to open Part 2 screen
+    And I save list items while scrolling through the list
+    Then I validate the "E, O, Q, U, W, X, Y" categories are empty
 
   @PartTwo @TAT-67
-  Scenario:	Validate categories with 3 or more items
-    Given	I open the Test App
-    When	I tap on "PART 2" button to open Part 2 screen
-    And	I save list items while scrolling through the list
-    Then	I validate the "(name categories)" categories have 3 or more items
+  Scenario: Validate categories with 3 or more items
+    Given I open the Test App
+    When I tap on "PART 2" button to open Part 2 screen
+    And I save list items while scrolling through the list
+    Then I validate the "M, L, P, R, S" categories have 3 or more items
 
 # Tests Part 3
   @PartThree @TAT-68
