@@ -147,4 +147,49 @@ public class IOSSteps {
             AssertionUtil.assertTrue(count >= 3, driver);
         }
     }
+
+    // Part 3
+    @When("I tap on {string} button to open Part {int} screen")
+    public void iTapOnButtonToOpenPartScreen(String arg0, int arg1) {
+    }
+
+    @And("I save all item price sum while scrolling through the item list")
+    public void iSaveAllItemPriceSumWhileScrollingThroughTheItemList() {
+    }
+
+    @Then("I validate the total sum matches all item price sum")
+    public void iValidateTheTotalSumMatchesAllItemPriceSum() {
+    }
+
+    @And("I save brand item price sum while scrolling through the item list")
+    public void iSaveBrandItemPriceSumWhileScrollingThroughTheItemList() {
+    }
+
+    @Then("I validate a brand total sum matches that brand item price sum")
+    public void iValidateABrandTotalSumMatchesThatBrandItemPriceSum() {
+    }
+
+    @And("I save all item image names while scrolling through the item list")
+    public void iSaveAllItemImageNamesWhileScrollingThroughTheItemList() {
+    }
+
+    @Then("I validate image names matches from the image name pool")
+    public void iValidateImageNamesMatchesFromTheImageNamePool() {
+    }
+
+    @And("I enable all section one checkboxes")
+    public void iEnableAllSectionOneCheckboxes() {
+    }
+
+    @Then("I see a pop-up window with a message {string} for section {int}")
+    public void iSeeAPopUpWindowWithAMessageForSection(String arg0, int arg1) {
+    }
+
+    @And("I enable all required section two checkboxes")
+    public void iEnableAllRequiredSectionTwoCheckboxes() {
+    }
+
+    @And("I enable all section three checkboxes that have {string} under them")
+    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem() {
+    }
 }
