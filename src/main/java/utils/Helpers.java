@@ -59,4 +59,11 @@ public class Helpers {
             ((RemoteWebDriver) driver).perform(Collections.singletonList(swipe));
         }
     }
+
+    // Method to check if the current platform is iOS
+    public static boolean isIOSPlatform(AppiumDriver driver) {
+        // Adjust this method according to your platform check logic
+        String platformName = driver.getCapabilities().getPlatformName().toString().toLowerCase();
+        return platformName.contains("ios");
+    }
 }
