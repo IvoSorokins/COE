@@ -8,12 +8,14 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import pages.BasePage;
 import pages.HomePage;
 import pages.TaskOnePage;
 
 import pages.TaskTwoPage;
 import utils.AssertionUtil;
 import utils.DriverSetup;
+import utils.PageFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,11 +70,14 @@ public class AndroidSteps {
     public void i_open_the_test_app() {
         homePage.headerDisplayed();
     }
+    @When("I tap on {string} button to open Part {int} screen")
+    public void i_tap_on_button_to_open_part_screen(String expectedHeaderTitle, int partNumber) {
+        homePage.clickPartButton(partNumber);
 
-    @When("I tap on {string} button to open Part 1 screen")
-    public void i_tap_on_button_to_open_part_screen(String string) {
-        homePage.clickPartButton(1);
-        AssertionUtil.assertEquals(taskOnePage.getHeaderTitle(), string, driver);
+        // Get the appropriate page object based on the part number
+        BasePage taskPage = PageFactoryUtil.getPageObject(driver, partNumber);
+
+        AssertionUtil.assertEquals(taskPage.getHeaderTitle(partNumber), expectedHeaderTitle, driver);
     }
 
     @And("I input valid user credentials in the form")
@@ -101,12 +106,6 @@ public class AndroidSteps {
     }
 
      //Part 2
-    @When("I tap on {string} button to open Part 2 screen")
-    public void i_tap_on_button_to_open_part_two_screen(String string) {
-        homePage.clickPartButton(2);
-        AssertionUtil.assertEquals(taskTwoPage.getHeaderTitle(), string, driver);
-    }
-
     @And("I save list items while scrolling through the list")
     public void i_save_list_items_while_scrolling_through_the_list(){
         savedItems = taskTwoPage.saveListItemsWhileScrollingUp("Android",5);
@@ -147,10 +146,6 @@ public class AndroidSteps {
         }
     }
     // Part 3
-    @When("I tap on {string} button to open Part {int} screen")
-    public void iTapOnButtonToOpenPartScreen(String arg0, int arg1) {
-    }
-
     @And("I save all item price sum while scrolling through the item list")
     public void iSaveAllItemPriceSumWhileScrollingThroughTheItemList() {
     }

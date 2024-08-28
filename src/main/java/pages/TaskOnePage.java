@@ -2,22 +2,11 @@ package pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
 import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.support.PageFactory;
 
-import static com.google.common.base.Ascii.toUpperCase;
-
-
-
-public class TaskOnePage {
-    private final AppiumDriver driver;
-
-    @AndroidFindBy(id = "headerTitle")
-    @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`name == \"Part 1\"`]")
-    RemoteWebElement headerTitle;
+public class TaskOnePage extends BasePage {
 
     @AndroidFindBy(id = "editTextTextPersonName")
     @iOSXCUITFindBy(accessibility = "usernameTextField")
@@ -45,12 +34,7 @@ public class TaskOnePage {
 
 
     public TaskOnePage(AppiumDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(this.driver), this);
-    }
-
-    public String getHeaderTitle(){
-        return toUpperCase(headerTitle.getText());
+        super(driver);
     }
 
     public void enterCredentials(String UserName, String Email, String Password){

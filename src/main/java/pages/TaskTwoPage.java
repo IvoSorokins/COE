@@ -2,22 +2,17 @@ package pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
-
 import org.openqa.selenium.remote.RemoteWebElement;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import utils.Helpers;
 
-import static com.google.common.base.Ascii.toUpperCase;
 
-public class TaskTwoPage {
-    private final AppiumDriver driver;
+public class TaskTwoPage extends BasePage {
 
     @AndroidFindBy(id = "headerTitle")
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"Part 2\" AND label == \"Part 2\"")
@@ -32,12 +27,7 @@ public class TaskTwoPage {
     List<RemoteWebElement> itemsFromList;
 
     public TaskTwoPage(AppiumDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(new AppiumFieldDecorator(this.driver), this);
-    }
-
-    public String getHeaderTitle(){
-        return toUpperCase(headerTitle.getText());
+        super(driver);
     }
 
     public List<String> saveListItemsWhileScrollingUp(String platform, int maxScrolls) {
