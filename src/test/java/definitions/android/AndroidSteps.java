@@ -108,7 +108,7 @@ public class AndroidSteps {
      //Part 2
     @And("I save list items while scrolling through the list")
     public void i_save_list_items_while_scrolling_through_the_list(){
-        savedItems = taskTwoPage.saveListItemsWhileScrollingUp("Android",5);
+        savedItems = taskTwoPage.saveListItemsWhileScrollingUp(5);
     }
 
     @Then("I validate the saved items are in alphabetical order")

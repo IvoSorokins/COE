@@ -110,7 +110,7 @@ public class IOSSteps {
     // Part 2
     @And("I save list items while scrolling through the list")
     public void i_save_list_items_while_scrolling_through_the_list(){
-        savedItems = taskTwoPage.saveListItemsWhileScrollingUp("iOS",5);
+        savedItems = taskTwoPage.saveListItemsWhileScrollingUp(5);
     }
 
     @Then("I validate the saved items are in alphabetical order")
@@ -173,19 +173,20 @@ public class IOSSteps {
     public void iValidateImageNamesMatchesFromTheImageNamePool() {
     }
 
-    @And("I enable all section one checkboxes")
-    public void iEnableAllSectionOneCheckboxes() {
-    }
-
-    @Then("I see a pop-up window with a message {string} for section {int}")
-    public void iSeeAPopUpWindowWithAMessageForSection(String arg0, int arg1) {
-    }
-
-    @And("I enable all required section two checkboxes")
-    public void iEnableAllRequiredSectionTwoCheckboxes() {
-    }
-
-    @And("I enable all section three checkboxes that have {string} under them")
-    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem() {
-    }
+    // Part 4
+//    @And("I enable all section one checkboxes")
+//    public void iEnableAllSectionOneCheckboxes() {
+//    }
+//
+//    @Then("I see a pop-up window with a message {string} for section {int}")
+//    public void iSeeAPopUpWindowWithAMessageForSection(String arg0, int arg1) {
+//    }
+//
+//    @And("I enable all required section two checkboxes")
+//    public void iEnableAllRequiredSectionTwoCheckboxes() {
+//    }
+//
+//    @And("I enable all section three checkboxes that have {string} under them")
+//    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem() {
+//    }
 }

@@ -14,14 +14,6 @@ import utils.Helpers;
 
 public class TaskTwoPage extends BasePage {
 
-    @AndroidFindBy(id = "headerTitle")
-    @iOSXCUITFindBy(iOSNsPredicate = "name == \"Part 2\" AND label == \"Part 2\"")
-    RemoteWebElement headerTitle;
-
-    @AndroidFindBy(id = "com.example.appfortestautomation:id/brandView")
-    @iOSXCUITFindBy(className = "XCUIElementTypeCollectionView")
-    RemoteWebElement itemList;
-
     @AndroidFindBy(xpath = "//android.widget.TextView[@resource-id='com.example.appfortestautomation:id/textView']")
     @iOSXCUITFindBy(iOSNsPredicate = "name == \"text\"")
     List<RemoteWebElement> itemsFromList;
@@ -30,7 +22,7 @@ public class TaskTwoPage extends BasePage {
         super(driver);
     }
 
-    public List<String> saveListItemsWhileScrollingUp(String platform, int maxScrolls) {
+    public List<String> saveListItemsWhileScrollingUp(int maxScrolls) {
         List<String> seenItems = new ArrayList<>();
 
         for (int i = 0; i < maxScrolls; i++) {
