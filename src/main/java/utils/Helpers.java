@@ -66,4 +66,15 @@ public class Helpers {
         String platformName = driver.getCapabilities().getPlatformName().toString().toLowerCase();
         return platformName.contains("ios");
     }
+
+    // Helper method to parse text to double
+    public static double parseTextToDouble(String priceText) {
+        try {
+            return Double.parseDouble(priceText.replaceAll("[^\\d.]", ""));
+        } catch (NumberFormatException e) {
+            // Handle error case, log, or return 0.0 if parsing fails
+            System.out.println("Error parsing price: " + priceText);
+            return 0.0;
+        }
+    }
 }
