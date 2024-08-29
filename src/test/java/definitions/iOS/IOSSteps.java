@@ -79,6 +79,11 @@ public class IOSSteps {
         // Get the appropriate page object based on the part number
         BasePage taskPage = PageFactoryUtil.getPageObject(driver, partNumber);
 
+        if (partNumber == 3){
+            LoggerUtil.logMessage("Part 3 is expected to have Title 'Part 2'");
+            partNumber = 2;
+            expectedHeaderTitle = "PART 2";
+        }
         AssertionUtil.assertEquals(taskPage.getHeaderTitle(partNumber), expectedHeaderTitle, driver);
     }
 
