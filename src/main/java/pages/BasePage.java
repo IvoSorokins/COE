@@ -11,8 +11,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import utils.Helpers;
 
-
 import static com.google.common.base.Ascii.toUpperCase;
+
 
 public abstract class BasePage {
     protected AppiumDriver driver;
