@@ -48,25 +48,25 @@ Feature: Tests
 
 # Tests Part 3
   @PartThree @TAT-68
-  Scenario:	Validate total sum
-    Given	I open the Test App
-    When	I tap on "PART 3" button to open Part 3 screen
-    And	I save all item price sum while scrolling through the item list
-    Then	I validate the total sum matches all item price sum
+  Scenario: Validate total sum
+    Given I open the Test App
+    When I tap on "PART 3" button to open Part 3 screen
+    And I save all item price sum while scrolling through the item list
+    Then I validate the total sum matches all item price sum
 
   @PartThree @TAT-69
-  Scenario:	Validate specific brand sum
-    Given	I open the Test App
-    When	I tap on "PART 3" button to open Part 3 screen
-    And	I save brand item price sum while scrolling through the item list
-    Then	I validate a brand total sum matches that brand item price sum
+  Scenario: Validate specific brand sum
+    Given I open the Test App
+    When I tap on "PART 3" button to open Part 3 screen
+    And I save brand item price sum while scrolling through the item list
+    Then I validate a brand total sum matches that brand item price sum
 
   @PartThree @TAT-70
   Scenario:	Validate all unique FAKEIMAGE names
-    Given	I open the Test App
-    When	I tap on "PART 3" button to open Part 3 screen
-    And	I save all item image names while scrolling through the item list
-    Then	I validate image names matches from the image name pool
+    Given I open the Test App
+    When I tap on "PART 3" button to open Part 3 screen
+    And I save all item image names while scrolling through the item list
+    Then I validate image names matches from the image name pool
 
 # Tests Part 4
   @PartFour @TAT-71
