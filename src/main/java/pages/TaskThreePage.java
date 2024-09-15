@@ -201,17 +201,19 @@ public class TaskThreePage extends BasePage {
         String platformName = String.valueOf(driver.getCapabilities().getPlatformName());
 
         if (platformName.contains("android")) {
-            expectedImageNames.add("Puppy");
-            expectedImageNames.add("AppleMacBook");
-            expectedImageNames.add("Kitten");
-            expectedImageNames.add("ABeatifulBoat");
-            expectedImageNames.add("Castle");
-            expectedImageNames.add("SamsungGalaxy");
-            expectedImageNames.add("Arcade");
-            expectedImageNames.add("CarThatYouCantAfford");
-            expectedImageNames.add("JustAPicOfTheFloor");
-            expectedImageNames.add("SomeRandomQuoteOnANiceBackground");
-            expectedImageNames.add("NiceShoes");
+            expectedImageNames.add("FAKEIMAGE-Puppy");
+            expectedImageNames.add("FAKEIMAGE-Godzilla");
+            expectedImageNames.add("FAKEIMAGE-AppleMacBook");
+            expectedImageNames.add("FAKEIMAGE-Kitten");
+            expectedImageNames.add("FAKEIMAGE-ABeautifulBoat");
+            expectedImageNames.add("FAKEIMAGE-Castle");
+            expectedImageNames.add("FAKEIMAGE-SamsungGalaxy");
+            expectedImageNames.add("FAKEIMAGE-Arcade");
+            expectedImageNames.add("FAKEIMAGE-CarThatYouCantAfford");
+            expectedImageNames.add("FAKEIMAGE-JustAPicOfTheFloor");
+            expectedImageNames.add("FAKEIMAGE-SomeRandomQuoteOnANiceBackground");
+            expectedImageNames.add("FAKEIMAGE-NiceShoes");
+            expectedImageNames.add("FAKEIMAGE-Apartment");
 
         } else if (platformName.contains("IOS")) {
             expectedImageNames.add("FAKEIMAGE-cactus");
