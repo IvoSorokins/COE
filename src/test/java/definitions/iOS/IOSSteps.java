@@ -9,19 +9,14 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import pages.BasePage;
-import pages.HomePage;
-import pages.TaskOnePage;
-import pages.TaskTwoPage;
+import pages.*;
 
 import utils.AssertionUtil;
 import utils.DriverSetup;
+import utils.LoggerUtil;
 import utils.PageFactoryUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static utils.LoggerUtil.logMessage;
 
@@ -33,8 +28,12 @@ public class IOSSteps {
     private static HomePage homePage;
     private static TaskOnePage taskOnePage;
     private static TaskTwoPage taskTwoPage;
+    private static TaskThreePage taskThreePage;
 
     private List<String> savedItems;
+    double savedTotalSum;
+    double savedBrandSum;
+    private Set<String> savedImageNames = new HashSet<>();
 
     @BeforeAll
     public static void beforeAll() {
@@ -65,6 +64,7 @@ public class IOSSteps {
         homePage = new HomePage(driver);
         taskOnePage = new TaskOnePage(driver);
         taskTwoPage = new TaskTwoPage(driver);
+        taskThreePage = new TaskThreePage(driver);
     }
 
     @Given("I open the Test App")
@@ -156,26 +156,37 @@ public class IOSSteps {
     // Part 3
     @And("I save all item price sum while scrolling through the item list")
     public void iSaveAllItemPriceSumWhileScrollingThroughTheItemList() {
+        savedTotalSum = taskThreePage.saveAllItemPriceSumWhileScrolling();
     }
 
     @Then("I validate the total sum matches all item price sum")
     public void iValidateTheTotalSumMatchesAllItemPriceSum() {
+        double displayedTotalSum = taskThreePage.getDisplayedTotalSum();
+        AssertionUtil.assertEquals(displayedTotalSum,savedTotalSum, driver);
     }
 
     @And("I save brand item price sum while scrolling through the item list")
     public void iSaveBrandItemPriceSumWhileScrollingThroughTheItemList() {
+        savedBrandSum = taskThreePage.saveBrandItemPriceSumWhileScrolling();
+        System.out.println("Brand sum from scrolling: "+savedBrandSum);
     }
 
     @Then("I validate a brand total sum matches that brand item price sum")
     public void iValidateABrandTotalSumMatchesThatBrandItemPriceSum() {
+        double displayedTotalBrandValue = taskThreePage.getTotalBrandNumber();
+        AssertionUtil.assertEquals(savedBrandSum, displayedTotalBrandValue, driver);
     }
 
     @And("I save all item image names while scrolling through the item list")
     public void iSaveAllItemImageNamesWhileScrollingThroughTheItemList() {
+        savedImageNames = taskThreePage.saveAllItemImageNamesWhileScrolling();
     }
 
     @Then("I validate image names matches from the image name pool")
     public void iValidateImageNamesMatchesFromTheImageNamePool() {
+        Set<String> invalidImageNames = taskThreePage.getInvalidImageNames(savedImageNames);
+
+        AssertionUtil.assertSetIsEmpty(invalidImageNames, "Found invalid image names", driver);
     }
 
     // Part 4
