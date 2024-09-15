@@ -29,6 +29,19 @@ public class AssertionUtil {
         }
     }
 
+    public static void assertSetIsEmpty(Set<?> set, String errorMessage, AppiumDriver driver) {
+        try {
+            if (!set.isEmpty()) {
+                // If the set is not empty, capture a screenshot and fail the assertion
+                captureScreenshot(driver, "Screenshot on failure");
+                Assert.fail(errorMessage + ": " + set);
+            }
+        } catch (AssertionError e) {
+            // Re-throw the exception to ensure the test is marked as failed
+            throw e;
+        }
+    }
+
     private static void captureScreenshot(WebDriver driver, String description) {
         if (driver != null) {
             byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
