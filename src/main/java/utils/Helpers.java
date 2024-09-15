@@ -70,7 +70,14 @@ public class Helpers {
     // Helper method to parse text to double
     public static double parseTextToDouble(String priceText) {
         try {
-            return Double.parseDouble(priceText.replaceAll("[^\\d.]", ""));
+            // Remove all non-numeric characters except for digits, commas, and periods
+            String cleanedPrice = priceText.replaceAll("[^0-9,\\.]", "");
+
+            // Replace commas with periods to handle decimal values correctly (e.g., "1,654.89" -> "1654.89")
+            cleanedPrice = cleanedPrice.replace(',', '.');
+
+            // Parse the cleaned string to a double
+            return Double.parseDouble(cleanedPrice);
         } catch (NumberFormatException e) {
             // Handle error case, log, or return 0.0 if parsing fails
             System.out.println("Error parsing price: " + priceText);
