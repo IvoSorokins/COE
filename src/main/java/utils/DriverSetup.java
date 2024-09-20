@@ -52,8 +52,8 @@ public class DriverSetup extends ConfigReader {
             AndroidOptions.setAppActivity(getProperty("appActivity"));
             AndroidOptions.setAppPackage(getProperty("appPackage"));
             AndroidOptions.setNoReset(Boolean.parseBoolean(getProperty("noReset")));
-            AndroidOptions.setNewCommandTimeout(newCommandTimeout);
             AndroidOptions.setAutoGrantPermissions(Boolean.parseBoolean(getProperty("autoGrantPermissions")));
+            AndroidOptions.setNewCommandTimeout(Duration.ofSeconds(2));
 
             try {
                 driver = new AndroidDriver(new URI(getProperty("appiumURL")).toURL(), AndroidOptions);
