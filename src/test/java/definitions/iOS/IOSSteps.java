@@ -188,19 +188,19 @@ public class IOSSteps {
     }
 
     // Part 4
-//    @And("I enable all section one checkboxes")
-//    public void iEnableAllSectionOneCheckboxes() {
-//    }
-//
-//    @Then("I see a pop-up window with a message {string} for section {int}")
-//    public void iSeeAPopUpWindowWithAMessageForSection(String arg0, int arg1) {
-//    }
-//
-//    @And("I enable all required section two checkboxes")
-//    public void iEnableAllRequiredSectionTwoCheckboxes() {
-//    }
-//
-//    @And("I enable all section three checkboxes that have {string} under them")
-//    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem() {
-//    }
+    @And("I enable all section one checkboxes")
+    public void iEnableAllSectionOneCheckboxes() {
+    }
+
+    @Then("I see a pop-up window with a message {string} for section {int}")
+    public void iSeeAPopUpWindowWithAMessageForSection(String arg0, int arg1) {
+    }
+
+    @And("I enable all required section two checkboxes")
+    public void iEnableAllRequiredSectionTwoCheckboxes() {
+    }
+
+    @And("I enable all section three checkboxes that have {string} under them")
+    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem() {
+    }
 }
