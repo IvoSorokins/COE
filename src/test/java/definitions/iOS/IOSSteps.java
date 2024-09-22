@@ -168,7 +168,6 @@ public class IOSSteps {
     @And("I save brand item price sum while scrolling through the item list")
     public void iSaveBrandItemPriceSumWhileScrollingThroughTheItemList() {
         savedBrandSum = taskThreePage.saveBrandItemPriceSumWhileScrolling();
-        System.out.println("Brand sum from scrolling: "+savedBrandSum);
     }
 
     @Then("I validate a brand total sum matches that brand item price sum")
@@ -185,7 +184,6 @@ public class IOSSteps {
     @Then("I validate image names matches from the image name pool")
     public void iValidateImageNamesMatchesFromTheImageNamePool() {
         Set<String> invalidImageNames = taskThreePage.getInvalidImageNames(savedImageNames);
-
         AssertionUtil.assertSetIsEmpty(invalidImageNames, "Found invalid image names", driver);
     }
 
