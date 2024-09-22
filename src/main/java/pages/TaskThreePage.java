@@ -7,8 +7,12 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import utils.Helpers;
+
+import java.time.Duration;
 
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +20,7 @@ import java.util.Set;
 
 
 public class TaskThreePage extends BasePage {
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
     @AndroidFindBy(id = "total")
     @iOSXCUITFindBy(iOSClassChain = "**/XCUIElementTypeStaticText[`name == \"totalText\"`]")
@@ -121,8 +126,10 @@ public class TaskThreePage extends BasePage {
                     brandText = itemElement.findElement(AppiumBy.iOSNsPredicateString("name == 'brandText'")).getText();
                     priceText = itemElement.findElement(AppiumBy.iOSNsPredicateString("name == 'priceText'")).getText();
                 } else {
-                    brandText = itemElement.findElement(AppiumBy.id("fakeBrand")).getText();
-                    priceText = itemElement.findElement(AppiumBy.id("fakePrice")).getText();
+                    WebElement brandElement = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.id("fakeBrand")));
+                    WebElement priceElement = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.id("fakePrice")));
+                    brandText = brandElement.getText();
+                    priceText = priceElement.getText();
                 }
 
                 brandText = brandText.replace("Brand: ", "").trim();
@@ -162,7 +169,7 @@ public class TaskThreePage extends BasePage {
             if (Helpers.isIOSPlatform(driver)) {
                 currentVisibleItems = driver.findElements(AppiumBy.iOSNsPredicateString("name == 'imageText'"));
             } else {
-                currentVisibleItems = driver.findElements(AppiumBy.id("fakeImage"));
+                currentVisibleItems = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(AppiumBy.id("fakeImage")));
             }
 
 
@@ -197,32 +204,39 @@ public class TaskThreePage extends BasePage {
 
     public Set<String> getExpectedImageNames() {
         Set<String> expectedImageNames = new HashSet<>();
-
         String platformName = String.valueOf(driver.getCapabilities().getPlatformName());
 
-        if (platformName.contains("android")) {
-            expectedImageNames.add("FAKEIMAGE-Puppy");
-            expectedImageNames.add("FAKEIMAGE-Godzilla");
-            expectedImageNames.add("FAKEIMAGE-AppleMacBook");
-            expectedImageNames.add("FAKEIMAGE-Kitten");
-            expectedImageNames.add("FAKEIMAGE-ABeautifulBoat");
-            expectedImageNames.add("FAKEIMAGE-Castle");
-            expectedImageNames.add("FAKEIMAGE-SamsungGalaxy");
-            expectedImageNames.add("FAKEIMAGE-Arcade");
-            expectedImageNames.add("FAKEIMAGE-CarThatYouCantAfford");
-            expectedImageNames.add("FAKEIMAGE-JustAPicOfTheFloor");
-            expectedImageNames.add("FAKEIMAGE-SomeRandomQuoteOnANiceBackground");
-            expectedImageNames.add("FAKEIMAGE-NiceShoes");
-            expectedImageNames.add("FAKEIMAGE-Apartment");
+        // Android image name pool
+        if (platformName.contains("ANDROID")) {
+            expectedImageNames.addAll(Set.of(
+                    "FAKEIMAGE-Puppy",
+                    "FAKEIMAGE-Godzilla",
+                    "FAKEIMAGE-AppleMacBook",
+                    "FAKEIMAGE-Kitten",
+                    "FAKEIMAGE-ABeautifulBoat",
+                    "FAKEIMAGE-Castle",
+                    "FAKEIMAGE-SamsungGalaxy",
+                    "FAKEIMAGE-Arcade",
+                    "FAKEIMAGE-CarThatYouCantAfford",
+                    "FAKEIMAGE-JustAPicOfTheFloor",
+                    "FAKEIMAGE-SomeRandomQuoteOnANiceBackground",
+                    "FAKEIMAGE-NiceShoes",
+                    "FAKEIMAGE-Apartment",
+                    "FAKEIMAGE-GlassOfWine"
 
-        } else if (platformName.contains("IOS")) {
-            expectedImageNames.add("FAKEIMAGE-cactus");
-            expectedImageNames.add("FAKEIMAGE-book");
-            expectedImageNames.add("FAKEIMAGE-phone");
-            expectedImageNames.add("FAKEIMAGE-person");
-            expectedImageNames.add("FAKEIMAGE-watch");
-            expectedImageNames.add("FAKEIMAGE-car");
-            expectedImageNames.add("FAKEIMAGE-macbook");
+            ));
+        }
+        // iOS image name pool
+        else if (platformName.contains("IOS")) {
+            expectedImageNames.addAll(Set.of(
+                    "FAKEIMAGE-cactus",
+                    "FAKEIMAGE-book",
+                    "FAKEIMAGE-phone",
+                    "FAKEIMAGE-person",
+                    "FAKEIMAGE-watch",
+                    "FAKEIMAGE-car",
+                    "FAKEIMAGE-macbook"
+            ));
         }
         return expectedImageNames;
     }

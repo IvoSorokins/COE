@@ -8,19 +8,13 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import pages.BasePage;
-import pages.HomePage;
-import pages.TaskOnePage;
+import pages.*;
 
-import pages.TaskTwoPage;
 import utils.AssertionUtil;
 import utils.DriverSetup;
 import utils.PageFactoryUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static utils.LoggerUtil.logMessage;
 
@@ -32,8 +26,12 @@ public class AndroidSteps {
     private static HomePage homePage;
     private static TaskOnePage taskOnePage;
     private static TaskTwoPage taskTwoPage;
+    private static TaskThreePage taskThreePage;
 
     private List<String> savedItems;
+    double savedTotalSum;
+    double savedBrandSum;
+    Set<String> savedImageNames = new HashSet<>();
 
     @BeforeAll
     public static void beforeAll() {
@@ -49,7 +47,6 @@ public class AndroidSteps {
 
     @After
     public void tearDown(Scenario scenario){
-        // Log message and quit driver
         logMessage("Ending scenario: " + scenario.getName());
         if (driver != null) {
             driver.quit();
@@ -64,6 +61,7 @@ public class AndroidSteps {
         homePage = new HomePage(driver);
         taskOnePage = new TaskOnePage(driver);
         taskTwoPage = new TaskTwoPage(driver);
+        taskThreePage = new TaskThreePage(driver);
     }
 
     @Given("I open the Test App")
@@ -145,44 +143,55 @@ public class AndroidSteps {
             AssertionUtil.assertTrue(count >= 3, driver);
         }
     }
+
     // Part 3
     @And("I save all item price sum while scrolling through the item list")
     public void iSaveAllItemPriceSumWhileScrollingThroughTheItemList() {
+        savedTotalSum = taskThreePage.saveAllItemPriceSumWhileScrolling();
     }
 
     @Then("I validate the total sum matches all item price sum")
     public void iValidateTheTotalSumMatchesAllItemPriceSum() {
+        double displayedTotalSum = taskThreePage.getDisplayedTotalSum();
+        AssertionUtil.assertEquals(displayedTotalSum,savedTotalSum, driver);
     }
 
     @And("I save brand item price sum while scrolling through the item list")
     public void iSaveBrandItemPriceSumWhileScrollingThroughTheItemList() {
+        savedBrandSum = taskThreePage.saveBrandItemPriceSumWhileScrolling();
     }
 
     @Then("I validate a brand total sum matches that brand item price sum")
     public void iValidateABrandTotalSumMatchesThatBrandItemPriceSum() {
+        double displayedTotalBrandValue = taskThreePage.getTotalBrandNumber();
+        AssertionUtil.assertEquals(savedBrandSum, displayedTotalBrandValue, driver);
     }
 
     @And("I save all item image names while scrolling through the item list")
     public void iSaveAllItemImageNamesWhileScrollingThroughTheItemList() {
+        savedImageNames = taskThreePage.saveAllItemImageNamesWhileScrolling();
     }
 
     @Then("I validate image names matches from the image name pool")
     public void iValidateImageNamesMatchesFromTheImageNamePool() {
+        Set<String> invalidImageNames = taskThreePage.getInvalidImageNames(savedImageNames);
+        AssertionUtil.assertSetIsEmpty(invalidImageNames, "Found invalid image names", driver);
     }
 
-    @And("I enable all section one checkboxes")
-    public void iEnableAllSectionOneCheckboxes() {
-    }
-
-    @Then("I see a pop-up window with a message {string} for section {int}")
-    public void iSeeAPopUpWindowWithAMessageForSection(String arg0, int arg1) {
-    }
-
-    @And("I enable all required section two checkboxes")
-    public void iEnableAllRequiredSectionTwoCheckboxes() {
-    }
-
-    @And("I enable all section three checkboxes that have {string} under them")
-    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem() {
-    }
+    // Part 4
+//    @And("I enable all section one checkboxes")
+//    public void iEnableAllSectionOneCheckboxes() {
+//    }
+//
+//    @Then("I see a pop-up window with a message {string} for section {int}")
+//    public void iSeeAPopUpWindowWithAMessageForSection(String arg0, int arg1) {
+//    }
+//
+//    @And("I enable all required section two checkboxes")
+//    public void iEnableAllRequiredSectionTwoCheckboxes() {
+//    }
+//
+//    @And("I enable all section three checkboxes that have {string} under them")
+//    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem() {
+//    }
 }
