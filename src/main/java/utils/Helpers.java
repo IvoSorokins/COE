@@ -5,6 +5,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -84,4 +85,14 @@ public class Helpers {
             return 0.0;
         }
     }
+
+    // Method to check if element is visible
+    public static boolean isElementVisible(RemoteWebElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (Exception e) {
+            return false; // If exception occurs (e.g., element not found), return false
+        }
+    }
+
 }
