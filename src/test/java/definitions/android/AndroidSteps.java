@@ -183,6 +183,7 @@ public class AndroidSteps {
     // Part 4
     @And("I enable all section one checkboxes")
     public void iEnableAllSectionOneCheckboxes() {
+        taskFourPage.enableAllSectionOneCheckboxes();
     }
 
     @Then("I see a pop-up window with a message {string} for section {int}")
