@@ -70,25 +70,25 @@ Feature: Tests
 
 # Tests Part 4
   @PartFour @TAT-71
-  Scenario:	Enable all Section One checkboxes
-    Given	I open the Test App
-    When	I tap on "PART 4" button to open Part 4 screen
-    And	I enable all section one checkboxes
-    And	I tap on SUBMIT button
-    Then	I see a pop-up window with a message "Success" for section 1
+  Scenario: Enable all Section One checkboxes
+    Given I open the Test App
+    When I tap on "PART 4" button to open Part 4 screen
+    And I enable all section one checkboxes
+    And I tap on SUBMIT button
+    Then I see a pop-up window with a message "Success" for section 1
 
   @PartFour @TAT-72
-  Scenario:	Enable all required section two checkboxes
-    Given	I open the Test App
-    When	I tap on "PART 4" button to open Part 4 screen
-    And	I enable all required section two checkboxes
-    And	I tap on SUBMIT button
-    Then	I see a pop-up window with a message "Success" for section 2
+  Scenario: Enable all required section two checkboxes
+    Given I open the Test App
+    When I tap on "PART 4" button to open Part 4 screen
+    And I enable all required section two checkboxes
+    And I tap on SUBMIT button
+    Then I see a pop-up window with a message "Success" for section 2
 
   @PartFour @TAT-73
-  Scenario:	Enable all section three checkboxes that have 'yes' under them
-    Given	I open the Test App
-    When	I tap on "PART 4" button to open Part 4 screen
-    And	I enable all section three checkboxes that have 'yes' under them
-    And	I tap on SUBMIT button
-    Then	I see a pop-up window with a message "Success" for section 3
+  Scenario: Enable all section three checkboxes that have 'yes' under them
+    Given I open the Test App
+    When I tap on "PART 4" button to open Part 4 screen
+    And I enable all section three checkboxes that have 'yes' under them
+    And I tap on SUBMIT button
+    Then I see a pop-up window with a message "Success" for section 3
