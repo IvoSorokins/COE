@@ -29,6 +29,7 @@ public class IOSSteps {
     private static TaskOnePage taskOnePage;
     private static TaskTwoPage taskTwoPage;
     private static TaskThreePage taskThreePage;
+    private static TaskFourPage taskFourPage;
 
     private List<String> savedItems;
     double savedTotalSum;
@@ -65,6 +66,7 @@ public class IOSSteps {
         taskOnePage = new TaskOnePage(driver);
         taskTwoPage = new TaskTwoPage(driver);
         taskThreePage = new TaskThreePage(driver);
+        taskFourPage = new TaskFourPage(driver);
     }
 
     @Given("I open the Test App")
