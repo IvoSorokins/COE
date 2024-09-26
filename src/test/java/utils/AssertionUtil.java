@@ -43,6 +43,17 @@ public class AssertionUtil {
         }
     }
 
+    public static void assertContains(String actual, String expectedSubstring, AppiumDriver driver) {
+        try {
+            Assert.assertTrue(actual.contains(expectedSubstring),
+                    "Expected the actual text to contain: " + expectedSubstring + ", but found: " + actual);
+        } catch (AssertionError e) {
+            captureScreenshot(driver, "Screenshot on assertion failure");
+            throw e;
+        }
+    }
+
+
     private static void captureScreenshot(WebDriver driver, String description) {
         if (driver != null) {
             byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
