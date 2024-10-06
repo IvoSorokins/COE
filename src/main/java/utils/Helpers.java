@@ -1,11 +1,14 @@
 package utils;
 
 import io.appium.java_client.AppiumDriver;
+
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -96,4 +99,40 @@ public class Helpers {
         }
     }
 
+    public static void scrollUntilElementIsVisible(WebElement element,String direction,AppiumDriver driver){
+        boolean isVisible = false;
+
+        Helpers.scroll(direction, 1, driver); // At least 1 scroll is necessary and speeds up tests
+
+        while (!isVisible) {
+            try {
+                if (Helpers.isElementVisible(element)) {
+                    isVisible = true;
+                } else {
+                    Helpers.scroll(direction, 1, driver);
+                }
+            } catch (Exception e) {
+                Helpers.scroll(direction, 1, driver);
+            }
+        }
+    }
+
+    public static void waitAndClick(WebElement element, AppiumDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+
+        element.click();
+    }
+
+    // Helper method to check if the TextView follows the CheckBox
+    private boolean isTextViewNextToCheckBox(WebElement checkBox, WebElement textView) {
+        // Verify if the TextView is the following sibling of the CheckBox
+        try {
+            // Get the location or DOM order to verify proximity (or use other validation criteria)
+            return checkBox.getLocation().getY() < textView.getLocation().getY();  // Check if the TextView is below the CheckBox
+        } catch (Exception e) {
+            return false;  // In case the proximity check fails, assume they are not related
+        }
+    }
 }

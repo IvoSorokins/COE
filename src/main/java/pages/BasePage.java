@@ -5,20 +5,27 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import utils.Helpers;
 
+import static utils.Helpers.waitAndClick;
 import static com.google.common.base.Ascii.toUpperCase;
+import static utils.Helpers.scrollUntilElementIsVisible;
 
 
-public abstract class BasePage {
+public class BasePage {
     protected AppiumDriver driver;
 
     @AndroidFindBy(id = "headerTitle")
     protected RemoteWebElement headerTitle;
+
+    @AndroidFindBy(xpath = "//android.widget.Button[contains(@text, 'SUBMIT')]")
+    @iOSXCUITFindBy(accessibility = "submitButton")
+    RemoteWebElement submitButton;
 
     public BasePage(AppiumDriver driver) {
         this.driver = driver;
@@ -41,4 +48,11 @@ public abstract class BasePage {
             return toUpperCase(headerTitle.getText()); // Use Android locator
         }
     }
+
+    public void clickSubmitButton(){
+        scrollUntilElementIsVisible(submitButton,"up",driver);
+        waitAndClick(submitButton,driver);
+    }
+
+
 }

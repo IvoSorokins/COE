@@ -1,5 +1,6 @@
 package pages;
 
+
 import io.appium.java_client.AppiumDriver;
 
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -10,6 +11,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.PageFactory;
+
+import static utils.Helpers.waitAndClick;
 
 
 public class HomePage {
@@ -33,7 +36,6 @@ public class HomePage {
         header.isDisplayed();
     }
 
-    public void clickPartButton(int partNumber) {
-        getPartButton(partNumber).click();
+    public void clickPartButton(int partNumber) {waitAndClick(getPartButton(partNumber),driver);
     }
 }

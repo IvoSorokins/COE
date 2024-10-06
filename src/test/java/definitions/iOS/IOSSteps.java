@@ -11,10 +11,7 @@ import io.cucumber.java.en.When;
 
 import pages.*;
 
-import utils.AssertionUtil;
-import utils.DriverSetup;
-import utils.LoggerUtil;
-import utils.PageFactoryUtil;
+import utils.*;
 
 import java.util.*;
 
@@ -25,6 +22,7 @@ public class IOSSteps {
 
     private static AppiumDriver driver ;
     private static DriverSetup driverSetup;
+    private static BasePage basePage;
     private static HomePage homePage;
     private static TaskOnePage taskOnePage;
     private static TaskTwoPage taskTwoPage;
@@ -63,6 +61,7 @@ public class IOSSteps {
 
         driver = DriverSetup.getDriver();
         homePage = new HomePage(driver);
+        basePage = new BasePage(driver);
         taskOnePage = new TaskOnePage(driver);
         taskTwoPage = new TaskTwoPage(driver);
         taskThreePage = new TaskThreePage(driver);
@@ -100,8 +99,7 @@ public class IOSSteps {
     }
 
     @And("I tap on SUBMIT button")
-    public void i_tap_on_submit_button() {
-        taskOnePage.clickSubmit();
+    public void i_tap_on_submit_button() {basePage.clickSubmitButton();
     }
 
     @Then("I see a pop-up window with a message {string}")
@@ -192,18 +190,22 @@ public class IOSSteps {
     // Part 4
     @And("I enable all section one checkboxes")
     public void iEnableAllSectionOneCheckboxes() {
-        taskFourPage.enableAllSectionOneCheckboxes();
+        taskFourPage.enableAllSectionsCheckboxes(1);
     }
 
     @Then("I see a pop-up window with a message {string} for section {int}")
     public void iSeeAPopUpWindowWithAMessageForSection(String arg0, int arg1) {
+        AssertionUtil.assertContains(taskFourPage.messageText(arg1), "Section "+ arg1 + ": "+ arg0,driver);
     }
 
     @And("I enable all required section two checkboxes")
     public void iEnableAllRequiredSectionTwoCheckboxes() {
+        taskFourPage.enableSectionTwoFollowingSiblingsOfItem3();
     }
 
     @And("I enable all section three checkboxes that have {string} under them")
-    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem() {
+    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem(String arg0) {
+        taskFourPage.scrollUpUntilSectionThree();
+        taskFourPage.enableSectionThreeCheckBoxes(arg0);
     }
 }

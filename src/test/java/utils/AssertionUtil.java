@@ -2,6 +2,7 @@ package utils;
 
 import io.appium.java_client.AppiumDriver;
 import io.qameta.allure.Allure;
+
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -46,7 +47,7 @@ public class AssertionUtil {
     public static void assertContains(String actual, String expectedSubstring, AppiumDriver driver) {
         try {
             Assert.assertTrue(actual.contains(expectedSubstring),
-                    "Expected the actual text to contain: " + expectedSubstring + ", but found: " + actual);
+                    "\n\nExpected the actual text to contain: '" + expectedSubstring + "'\nBut found: '" + actual + "'");
         } catch (AssertionError e) {
             captureScreenshot(driver, "Screenshot on assertion failure");
             throw e;

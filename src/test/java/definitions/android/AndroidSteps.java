@@ -12,7 +12,6 @@ import pages.*;
 
 import utils.AssertionUtil;
 import utils.DriverSetup;
-import utils.PageFactoryUtil;
 
 import java.util.*;
 
@@ -23,6 +22,7 @@ public class AndroidSteps {
 
     private static DriverSetup driverSetup;
     private static AppiumDriver driver;
+    private static BasePage basePage;
     private static HomePage homePage;
     private static TaskOnePage taskOnePage;
     private static TaskTwoPage taskTwoPage;
@@ -59,6 +59,7 @@ public class AndroidSteps {
         driverSetup.beforeScenario(scenario.getName(),"Android");
 
         driver = DriverSetup.getDriver();
+        basePage = new BasePage(driver);
         homePage = new HomePage(driver);
         taskOnePage = new TaskOnePage(driver);
         taskTwoPage = new TaskTwoPage(driver);
@@ -73,11 +74,7 @@ public class AndroidSteps {
     @When("I tap on {string} button to open Part {int} screen")
     public void i_tap_on_button_to_open_part_screen(String expectedHeaderTitle, int partNumber) {
         homePage.clickPartButton(partNumber);
-
-        // Get the appropriate page object based on the part number
-        BasePage taskPage = PageFactoryUtil.getPageObject(driver, partNumber);
-
-        AssertionUtil.assertEquals(taskPage.getHeaderTitle(partNumber), expectedHeaderTitle, driver);
+        AssertionUtil.assertEquals(basePage.getHeaderTitle(partNumber), expectedHeaderTitle, driver);
     }
 
     @And("I input valid user credentials in the form")
@@ -91,8 +88,7 @@ public class AndroidSteps {
     }
 
     @And("I tap on SUBMIT button")
-    public void i_tap_on_submit_button() {
-        taskOnePage.clickSubmit();
+    public void i_tap_on_submit_button() {basePage.clickSubmitButton();
     }
 
     @Then("I see a pop-up window with a message {string}")
@@ -183,18 +179,22 @@ public class AndroidSteps {
     // Part 4
     @And("I enable all section one checkboxes")
     public void iEnableAllSectionOneCheckboxes() {
-        taskFourPage.enableAllSectionOneCheckboxes();
+        taskFourPage.enableAllSectionsCheckboxes(1);
     }
 
     @Then("I see a pop-up window with a message {string} for section {int}")
     public void iSeeAPopUpWindowWithAMessageForSection(String arg0, int arg1) {
+        AssertionUtil.assertContains(taskFourPage.messageText(arg1), "Step"+ arg1 + ": "+ arg0,driver);
     }
 
     @And("I enable all required section two checkboxes")
     public void iEnableAllRequiredSectionTwoCheckboxes() {
+        taskFourPage.enableSectionTwoFollowingSiblingsOfItem3();
     }
 
     @And("I enable all section three checkboxes that have {string} under them")
-    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem() {
+    public void iEnableAllSectionThreeCheckboxesThatHaveYesUnderThem(String arg0) {
+        taskFourPage.scrollUpUntilSectionThree();
+        taskFourPage.enableSectionThreeCheckBoxes(arg0);
     }
 }

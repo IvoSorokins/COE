@@ -17,7 +17,6 @@ import java.time.Duration;
 
 import static utils.LoggerUtil.logMessage;
 
-
 /**
  * Utility class for setting up the Appium driver
  */

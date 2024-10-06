@@ -20,10 +20,6 @@ public class TaskOnePage extends BasePage {
     @iOSXCUITFindBy(accessibility = "passwordTextField")
     RemoteWebElement editPasswordField;
 
-    @AndroidFindBy(id = "submit")
-    @iOSXCUITFindBy(accessibility = "submitButton")
-    RemoteWebElement submitButton;
-
     @AndroidFindBy(id = "textView")
     @iOSXCUITFindBy(accessibility = "Success")
     RemoteWebElement successPopUp;
@@ -43,9 +39,6 @@ public class TaskOnePage extends BasePage {
         editPasswordField.sendKeys(Password);
     }
 
-    public void clickSubmit(){
-        submitButton.click();
-    }
     public String getSuccessPopUpText(){
         return successPopUp.getAttribute("name");
     }
@@ -57,4 +50,5 @@ public class TaskOnePage extends BasePage {
     public boolean doesFailPopUpContain(String expectedText){
         return getFailPopUpText().contains(expectedText);
     }
+
 }
